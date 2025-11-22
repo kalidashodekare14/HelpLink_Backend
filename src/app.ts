@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
+import { AuthRoutes } from './modules/auth/routes';
 
 const app = express();
 
@@ -10,7 +10,7 @@ app.use(cors({
     origin: "*",
     credentials: true
 }))
-app.use(express());
+app.use(express.json());
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
@@ -21,5 +21,9 @@ app.get('/', (req, res) => {
         </div>    
     `)
 })
+
+
+// API routes version
+app.use("/api/v1/auth", AuthRoutes);
 
 export default app;
