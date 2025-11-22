@@ -1,0 +1,33 @@
+{
+"compilerOptions": {
+    // File stracture
+    "rootDir": "./src",
+    "outDir": "./dist",
+    // MOdule and Target  
+    "module": "commonjs",
+    "target": "es2020",
+    // Node enviroment types
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "node"
+    ],
+    // and npm install -D @types/node
+    // Output settings
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    // Stricter Typechecking Options
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    
+    // Clean build
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipDefaultLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node-modules"]
+}
