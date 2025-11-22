@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { AuthRoutes } from './modules/auth/routes';
+import { receiverRoutes } from './modules/receiver_portal/routes';
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.get('/', (req, res) => {
 
 // API routes version
 app.use("/api/v1/auth", AuthRoutes);
+app.use("/api/v1/receiver", receiverRoutes);
 
 export default app;

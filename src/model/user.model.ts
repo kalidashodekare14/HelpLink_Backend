@@ -12,7 +12,8 @@ export interface IUser {
         district: string,
         upazila: string,
         address: string
-    }
+    },
+
 }
 
 const userSchema = new Schema<IUser>(
