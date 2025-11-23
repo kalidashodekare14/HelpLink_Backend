@@ -12,7 +12,8 @@ export interface ICampaign {
         upazila: string,
         address: string
     },
-    status?: "Pending" | "Approved" | "Rejected"
+    request_status?: "Pending" | "Approved" | "Rejected"
+    delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled"
     receiver_email: string,
     donors: [
         {
@@ -40,10 +41,15 @@ const campaignSchema = new Schema<ICampaign>(
             upazila: { type: String, required: true },
             address: { type: String, required: true }
         },
-        status: {
+        request_status: {
             type: String,
             enum: ["Pending", "Approved", "Rejected"],
             default: "Pending"
+        },
+        delivery_status: {
+            type: String,
+            enum: ["Assigned", "Picked Up", "Delivered", "Cancelled"],
+            default: "Assigned"
         },
         receiver_email: { type: String, required: true },
         donors: [
