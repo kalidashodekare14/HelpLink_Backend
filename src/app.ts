@@ -6,6 +6,7 @@ import { receiverRoutes } from './modules/receiver_portal/routes';
 import { donorRoutes } from './modules/donor_portal/routes';
 import { userRoutes } from './modules/users/routes';
 import { volunteerRoutes } from './modules/volunteer_portal/routes';
+import { adminRoutes } from './modules/admin_portal/routes';
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use("/api/v1/profile", userRoutes);
 app.use("/api/v1/receiver", receiverRoutes);
 app.use("/api/v1/donor", donorRoutes);
 app.use("/api/v1/volunteer", volunteerRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 export default app;

@@ -1,0 +1,66 @@
+import sendResponse from "../../utils/sendResponse";
+import { adminService } from "./service"
+import { Request, Response } from "express";
+
+
+// Total User Controll
+export const totalUsersControll = async (req: Request, res: Response) => {
+    const result = await adminService.allUsers();
+    sendResponse(res, {
+        success: true,
+        message: "Total User Get Successfully",
+        data: result
+    })
+}
+
+// User Role Manage
+export const userRoleManageControll = async (req: Request, res: Response) => {
+    const roleInfo = {
+        id: req.params.id,
+        role: req.body.role
+    }
+    const result = await adminService.userRoleManage(roleInfo);
+    sendResponse(res, {
+        success: true,
+        message: "User Role Change Successfully",
+        data: result
+    })
+}
+
+// User Active Manage
+export const userActiveManageControll = async (req: Request, res: Response) => {
+    const roleInfo = {
+        id: req.params.id,
+        isActive: req.body.isActive
+    }
+    const result = await adminService.userActiveManage(roleInfo);
+    sendResponse(res, {
+        success: true,
+        message: "User Active Change Successfully",
+        data: result
+    })
+}
+
+// Total Campaign 
+export const totalCampaignControll = async (req: Request, res: Response) => {
+    const result = await adminService.allCampaigns();
+    sendResponse(res, {
+        success: true,
+        message: "Total Campaign Get Successfully",
+        data: result
+    })
+}
+
+// Campaign Status Change
+export const campaignStatusManageControll = async (req: Request, res: Response) => {
+    const roleInfo = {
+        id: req.params.id,
+        request_status: req.body.request_status
+    }
+    const result = await adminService.campaignStatusManage(roleInfo);
+    sendResponse(res, {
+        success: true,
+        message: "User Active Change Successfully",
+        data: result
+    })
+}
