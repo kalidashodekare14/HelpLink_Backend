@@ -14,6 +14,15 @@ export interface ICampaign {
     },
     status?: "Pending" | "Approved" | "Rejected"
     receiver_email: string,
+    donors: [
+        {
+            donor_email: string,
+            amount: number,
+            message: string,
+            date: Date,
+            status: "Pending" | "Confirmed" | "Cancelled"
+        }
+    ]
 }
 
 const campaignSchema = new Schema<ICampaign>(
@@ -36,7 +45,20 @@ const campaignSchema = new Schema<ICampaign>(
             enum: ["Pending", "Approved", "Rejected"],
             default: "Pending"
         },
-        receiver_email: { type: String, required: true }
+        receiver_email: { type: String, required: true },
+        donors: [
+            {
+                donor_email: { type: String, required: true },
+                amount: { type: Number, required: true },
+                message: { type: String, required: true },
+                date: { type: Date, required: true },
+                status: {
+                    type: String,
+                    enum: ["Pending", "Approved", "Rejected"],
+                    default: "Pending"
+                }
+            }
+        ],
 
     },
     { timestamps: true }
