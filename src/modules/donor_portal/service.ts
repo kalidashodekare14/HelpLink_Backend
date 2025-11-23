@@ -24,5 +24,15 @@ export const donorService = {
             }
         )
         return campaign
+    },
+    donateTrack: async (payload: any) => {
+        const email = payload;
+        const donateData = await Campaign.find(
+            {
+                "donors.donor_email": email
+            }
+        )
+        if (!donateData) throw Error("Donate data not found");
+        return donateData
     }
 }

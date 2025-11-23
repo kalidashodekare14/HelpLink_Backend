@@ -12,3 +12,12 @@ export const donorJoinCampaignControl = async (req: Request, res: Response) => {
         data: result
     })
 }
+
+export const donateTrackControl = async (req: Request, res: Response) => {
+    const result = await donorService.donateTrack(req.params.email);
+    sendResponse(res, {
+        success: true,
+        message: "Campaign Join Successfully",
+        data: result
+    })
+}
