@@ -5,6 +5,27 @@ import { User } from "../../model/user.model"
 
 
 export const adminService = {
+    overviewInfo: async () => {
+        const totalUser = await User.countDocuments();
+        const totalCampaign = await Campaign.countDocuments();
+        const donationResult = await Campaign.aggregate([
+            { $unwind: "$donors" },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$donors.amount" }
+                }
+            }
+        ])
+
+        const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
+        return {
+            totalUser,
+            totalCampaign,
+            totalAmount
+        }
+
+    },
     allUsers: async () => {
         const totalUser = await User.find();
         return totalUser

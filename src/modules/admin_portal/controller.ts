@@ -3,6 +3,16 @@ import { adminService } from "./service"
 import { Request, Response } from "express";
 
 
+// Overview Info Controll
+export const overviewInfoControll = async (req: Request, res: Response) => {
+    const result = await adminService.overviewInfo();
+    sendResponse(res, {
+        success: true,
+        message: "Total User Get Successfully",
+        data: result
+    })
+}
+
 // Total User Controll
 export const totalUsersControll = async (req: Request, res: Response) => {
     const result = await adminService.allUsers();
