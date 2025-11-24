@@ -4,7 +4,7 @@ dotenv.config();
 type envTypes = {
     port: number,
     db_url: string
-    jwt_secret: string
+    jwt_secret: string,
 }
 
 
