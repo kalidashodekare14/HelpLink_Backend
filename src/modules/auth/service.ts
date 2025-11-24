@@ -5,9 +5,20 @@ import { config } from '../../config/env';
 
 export const AuthService = {
     registerUser: async (payload: any) => {
-        const { name, email, password } = payload;
+        const { name, email, password, role } = payload;
         const hashPassword = await bcrypt.hash(password, 14);
-        const user = await User.create({ name: name, email: email, password: hashPassword });
+        const queryUser = await User.findOne({ email: email });
+        if (queryUser) {
+            throw Error("User already exits");
+        }
+        const user = await User.create(
+            {
+                name: name,
+                email: email,
+                password: hashPassword,
+                role: role
+            }
+        );
         return user
     },
     loginUser: async (payload: any) => {
