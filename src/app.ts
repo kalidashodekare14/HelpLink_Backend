@@ -7,6 +7,7 @@ import { donorRoutes } from './modules/donor_portal/routes';
 import { userRoutes } from './modules/users/routes';
 import { volunteerRoutes } from './modules/volunteer_portal/routes';
 import { adminRoutes } from './modules/admin_portal/routes';
+import { publicRoutes } from './modules/public/routes';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 
 // API routes version
 app.use("/api/v1/auth", AuthRoutes);
+app.use("/api/v1/public", publicRoutes);
 app.use("/api/v1/profile", userRoutes);
 app.use("/api/v1/receiver", receiverRoutes);
 app.use("/api/v1/donor", donorRoutes);
