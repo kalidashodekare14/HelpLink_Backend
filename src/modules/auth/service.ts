@@ -29,6 +29,10 @@ export const AuthService = {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error("Invalid Crenentials");
 
+        if(user.isActive === false){
+            throw new Error("Your account has been disabled")
+        }
+
         const token = jwt.sign({ id: user._id, email: user.email }, config.jwt_secret, {
             expiresIn: "7d"
         })
