@@ -17,11 +17,13 @@ export interface ICampaign {
     receiver_email: string,
     donors: [
         {
+            donor_name: string,
             donor_email: string,
             amount: number,
             message: string,
             date: Date,
-            status: "Pending" | "Confirmed" | "Cancelled"
+            payment_status: "Unpaid" | "Paid" | "Cancelled",
+            payment_method: "Bkash" | "Nagad" | "SSLCommerz"
         }
     ]
 }
@@ -54,14 +56,19 @@ const campaignSchema = new Schema<ICampaign>(
         receiver_email: { type: String, required: true },
         donors: [
             {
+                donor_name: { type: String, required: true },
                 donor_email: { type: String, required: true },
                 amount: { type: Number, required: true },
                 message: { type: String, required: true },
                 date: { type: Date, required: true },
-                status: {
+                payment_status: {
                     type: String,
-                    enum: ["Pending", "Approved", "Rejected"],
-                    default: "Pending"
+                    enum: ["Unpaid", "Paid", "Cancelled"],
+                    default: "Unpaid"
+                },
+                payment_method: {
+                    type: String,
+                    enum: ["Bkash", "Nagad", "SSLCommerz"]
                 }
             }
         ],

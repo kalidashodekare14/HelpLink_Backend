@@ -5,7 +5,7 @@ import { donorJoinCampaignValidation } from './validation';
 const router = express.Router();
 
 
-router.post('/:campaignId/join', validateRequest(donorJoinCampaignValidation), donorJoinCampaignControl);
+router.post('/join_campaign/:id', validateRequest(donorJoinCampaignValidation), donorJoinCampaignControl);
 router.get('/donate_track/:email', donateTrackControl);
 
 

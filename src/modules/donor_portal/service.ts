@@ -11,10 +11,12 @@ export const donorService = {
             {
                 $push: {
                     donors: {
+                        donor_name: campaignData.donor_name,
                         donor_email: campaignData.donor_email,
                         amount: campaignData.amount,
                         message: campaignData.message,
-                        status: campaignData.status || "Pending",
+                        payment_status: campaignData.payment_status || "Unpaid",
+                        payment_method: campaignData.payment_method,
                         date: new Date()
                     }
                 }
