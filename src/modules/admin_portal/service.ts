@@ -26,8 +26,27 @@ export const adminService = {
         }
 
     },
-    allUsers: async () => {
-        const totalUser = await User.find();
+    allUsers: async (query: any) => {
+        const { search, role, status } = query;
+
+        const filter: any = {}
+
+        if (role) {
+            filter.role = { $regex: role, $options: "i" }
+        }
+
+        if (status !== undefined) {
+            filter.isActive = status
+        }
+
+        if (search) {
+            filter.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+            ]
+        }
+
+        const totalUser = await User.find(filter).sort({ createdAt: -1 })
         return totalUser
     },
     userRoleManage: async (payload: any) => {
@@ -46,13 +65,13 @@ export const adminService = {
         return user;
     },
     userActiveManage: async (payload: any) => {
-        const { id, isActive } = payload;
-        console.log('checking data for Active', isActive);
+        const { id, status } = payload;
+        console.log('checking data for Active', status);
         const user = await User.findByIdAndUpdate(
             id,
             {
                 $set: {
-                    isActive: isActive
+                    isActive: status
                 }
             },
             {

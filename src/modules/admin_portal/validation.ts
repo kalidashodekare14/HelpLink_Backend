@@ -13,7 +13,7 @@ export const userRoleValidation = z.object({
 
 export const userActiveValidation = z.object({
     body: z.object({
-        isActive: z.boolean()
+        status: z.boolean()
     }),
     params: z.object({
         id: z.string().min(1, "Request ID is required")

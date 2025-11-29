@@ -15,7 +15,8 @@ export const overviewInfoControll = async (req: Request, res: Response) => {
 
 // Total User Controll
 export const totalUsersControll = async (req: Request, res: Response) => {
-    const result = await adminService.allUsers();
+
+    const result = await adminService.allUsers(req.query);
     sendResponse(res, {
         success: true,
         message: "Total User Get Successfully",
@@ -29,6 +30,8 @@ export const userRoleManageControll = async (req: Request, res: Response) => {
         id: req.params.id,
         role: req.body.role
     }
+    console.log('checking params', req.params);
+    console.log('checking body', req.body);
     const result = await adminService.userRoleManage(roleInfo);
     sendResponse(res, {
         success: true,
@@ -41,7 +44,7 @@ export const userRoleManageControll = async (req: Request, res: Response) => {
 export const userActiveManageControll = async (req: Request, res: Response) => {
     const roleInfo = {
         id: req.params.id,
-        isActive: req.body.isActive
+        status: req.body.status
     }
     const result = await adminService.userActiveManage(roleInfo);
     sendResponse(res, {
