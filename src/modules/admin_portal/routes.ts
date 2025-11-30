@@ -1,7 +1,7 @@
 import express from 'express';
-import { overviewInfoControll, totalUsersControll, userRoleManageControll, userActiveManageControll, totalCampaignControll, campaignStatusManageControll } from './controller';
+import { overviewInfoControll, totalUsersControll, userRoleManageControll, userActiveManageControll, totalCampaignControll, campaignStatusManageControll, campaignDevliveryStatusManageControll } from './controller';
 import validateRequest from '../../middlewares/validateRequest';
-import { userRoleValidation, userActiveValidation, campaignStatusValidation } from './validation';
+import { userRoleValidation, userActiveValidation, campaignStatusValidation, campaignDeliStatusValidation } from './validation';
 const router = express.Router();
 
 
@@ -11,7 +11,7 @@ router.get("/total_users", totalUsersControll);
 router.patch("/user_role/:id", validateRequest(userRoleValidation), userRoleManageControll);
 router.patch("/user_active/:id", validateRequest(userActiveValidation), userActiveManageControll);
 router.get("/total_campaign", totalCampaignControll);
-router.patch("/campaign_status/:id", validateRequest(campaignStatusValidation), campaignStatusManageControll);
-
+router.patch("/campaign_request_status/:id", validateRequest(campaignStatusValidation), campaignStatusManageControll);
+router.patch("/campaign_delivery_status/:id", validateRequest(campaignDeliStatusValidation), campaignDevliveryStatusManageControll);
 
 export const adminRoutes = router;

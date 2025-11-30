@@ -2,19 +2,19 @@ import { Schema, model } from "mongoose";
 
 
 export interface ICampaign {
-    image: string[],
-    title: string,
-    description: string,
-    category: string,
+    image: string[];
+    title: string;
+    description: string;
+    category: string;
     location: {
         division: string,
         district: string,
         upazila: string,
         address: string
-    },
-    request_status?: "Pending" | "Approved" | "Rejected"
-    delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled"
-    receiver_email: string,
+    };
+    request_status?: "Pending" | "Approved" | "Rejected";
+    delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled";
+    receiver_email: string;
     donors: [
         {
             donor_name: string,

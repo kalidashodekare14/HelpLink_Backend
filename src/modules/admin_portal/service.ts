@@ -81,8 +81,31 @@ export const adminService = {
         return user;
     },
     // Campaign Manage
-    allCampaigns: async () => {
-        const totalCampaign = await Campaign.find();
+    allCampaigns: async (query: any) => {
+        const { search, request_status, delivery_status } = query;
+
+        const filter: any = {}
+
+        if (request_status) {
+            filter.request_status = { $regex: request_status, $options: "i" }
+        }
+
+        if (delivery_status) {
+            filter.delivery_status = { $regex: delivery_status, $options: "i" }
+        }
+
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { category: { $regex: search, $options: "i" } },
+                { "location.division": { $regex: search, $options: "i" } },
+                { "location.district": { $regex: search, $options: "i" } },
+                { "location.upazila": { $regex: search, $options: "i" } },
+                { "location.address": { $regex: search, $options: "i" } },
+            ]
+        }
+
+        const totalCampaign = await Campaign.find(filter).sort({ createdAt: -1 });
         return totalCampaign;
     },
     campaignStatusManage: async (payload: any) => {
@@ -92,6 +115,21 @@ export const adminService = {
             {
                 $set: {
                     request_status: request_status
+                }
+            },
+            {
+                new: true
+            }
+        )
+        return campaign;
+    },
+    campaignDeliveryStatusManage: async (payload: any) => {
+        const { id, delivery_status } = payload;
+        const campaign = await Campaign.findByIdAndUpdate(
+            id,
+            {
+                $set: {
+                    delivery_status: delivery_status
                 }
             },
             {

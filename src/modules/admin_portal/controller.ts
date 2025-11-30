@@ -56,7 +56,7 @@ export const userActiveManageControll = async (req: Request, res: Response) => {
 
 // Total Campaign 
 export const totalCampaignControll = async (req: Request, res: Response) => {
-    const result = await adminService.allCampaigns();
+    const result = await adminService.allCampaigns(req.query);
     sendResponse(res, {
         success: true,
         message: "Total Campaign Get Successfully",
@@ -66,14 +66,29 @@ export const totalCampaignControll = async (req: Request, res: Response) => {
 
 // Campaign Status Change
 export const campaignStatusManageControll = async (req: Request, res: Response) => {
-    const roleInfo = {
+    const requestInfo = {
         id: req.params.id,
         request_status: req.body.request_status
     }
-    const result = await adminService.campaignStatusManage(roleInfo);
+    console.log('checking request status', req.body.request_status);
+    const result = await adminService.campaignStatusManage(requestInfo);
     sendResponse(res, {
         success: true,
-        message: "User Active Change Successfully",
+        message: "User Request Status Update Successfully",
+        data: result
+    })
+}
+
+// Campaign Delivery Status Change
+export const campaignDevliveryStatusManageControll = async (req: Request, res: Response) => {
+    const deliveryInfo = {
+        id: req.params.id,
+        delivery_status: req.body.delivery_status
+    }
+    const result = await adminService.campaignDeliveryStatusManage(deliveryInfo);
+    sendResponse(res, {
+        success: true,
+        message: "User Delivery Status Update Successfully",
         data: result
     })
 }

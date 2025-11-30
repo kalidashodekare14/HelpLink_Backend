@@ -20,9 +20,20 @@ export const userActiveValidation = z.object({
     })
 })
 
+
 export const campaignStatusValidation = z.object({
     body: z.object({
         request_status: z.enum(["Pending", "Approved", "Rejected"], "Invalid status")
+    }),
+    params: z.object({
+        id: z.string().min(1, "Request ID is required")
+    })
+})
+
+
+export const campaignDeliStatusValidation = z.object({
+    body: z.object({
+        delivery_status: z.enum(["Assigned", "Picked Up", "Delivered", "Cancelled"], "Invalid status")
     }),
     params: z.object({
         id: z.string().min(1, "Request ID is required")
