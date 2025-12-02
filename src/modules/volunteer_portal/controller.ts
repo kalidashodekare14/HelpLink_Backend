@@ -2,8 +2,19 @@ import sendResponse from "../../utils/sendResponse";
 import { volunteerService } from "./service"
 import { Response, Request } from "express"
 
+
+// Overview Info Controll
+export const volOverviewInfoControll = async (req: Request, res: Response) => {
+    const result = await volunteerService.volOverviewInfo();
+    sendResponse(res, {
+        success: true,
+        message: "Total Overview Get Successfully",
+        data: result
+    })
+}
+
 export const totalCampaignsControll = async (req: Request, res: Response) => {
-    const result = await volunteerService.totalCampaigns();
+    const result = await volunteerService.totalCampaigns(req.query);
     sendResponse(res, {
         success: true,
         message: "Total Campaign Successfully",

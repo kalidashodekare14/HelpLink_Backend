@@ -8,6 +8,7 @@ export interface IUser {
     password: string,
     role?: "admin" | "donor" | "receiver" | "volunteer",
     isActive: boolean,
+    gender: string,
     location: {
         division: string,
         district: string,
@@ -25,6 +26,7 @@ const userSchema = new Schema<IUser>(
         password: { type: String, required: true, minLength: 6 },
         role: { type: String, enum: ["admin", "donor", "receiver", "volunteer"], default: "receiver" },
         isActive: { type: Boolean, required: true, default: true },
+        gender: { type: String, required: true },
         location: {
             division: { type: String },
             district: { type: String },

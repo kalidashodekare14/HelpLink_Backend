@@ -36,7 +36,7 @@ app.use("/api/v1/public", publicRoutes);
 app.use("/api/v1/profile", userRoutes);
 app.use("/api/v1/receiver", receiverRoutes); // roleVerify("receiver"),
 app.use("/api/v1/donor",  donorRoutes); //roleVerify("donor"),
-app.use("/api/v1/volunteer", roleVerify("volunteer"), volunteerRoutes);
+app.use("/api/v1/volunteer",  volunteerRoutes); //roleVerify("volunteer"),
 app.use("/api/v1/admin",  adminRoutes); //roleVerify("admin"),
 
 export default app;

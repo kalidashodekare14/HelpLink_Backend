@@ -1,11 +1,52 @@
 import { Campaign } from "../../model/campaign.model"
 
 
-
-
 export const volunteerService = {
-    totalCampaigns: async () => {
-        const allCampaign = await Campaign.find();
+    volOverviewInfo: async () => {
+        const totalCampaign = await Campaign.countDocuments();
+        const donationResult = await Campaign.aggregate([
+            { $unwind: "$donors" },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$donors.amount" }
+                }
+            }
+        ])
+
+        const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
+        return {
+            totalCampaign,
+            totalAmount
+        }
+
+    },
+    totalCampaigns: async (query: any) => {
+
+        const { search, request_status, delivery_status } = query;
+
+        const filter: any = {}
+
+        if (request_status) {
+            filter.request_status = { $regex: request_status, $options: "i" }
+        }
+
+        if (delivery_status) {
+            filter.delivery_status = { $regex: delivery_status, $options: "i" }
+        }
+
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { category: { $regex: search, $options: "i" } },
+                { "location.division": { $regex: search, $options: "i" } },
+                { "location.district": { $regex: search, $options: "i" } },
+                { "location.upazila": { $regex: search, $options: "i" } },
+                { "location.address": { $regex: search, $options: "i" } },
+            ]
+        }
+
+        const allCampaign = await Campaign.find(filter).sort({ createdAt: -1 });
         return allCampaign;
     },
     verifyRequest: async (payload: any) => {
