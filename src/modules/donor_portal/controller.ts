@@ -22,3 +22,25 @@ export const donateTrackControl = async (req: Request, res: Response) => {
         data: result
     })
 }
+
+export const bikashPaymentControl = async (req: Request, res: Response) => {
+    const result = await donorService.bikashPayment(req.body);
+    sendResponse(res, {
+        success: true,
+        message: "Bikash Payment Successfully",
+        data: result
+    })
+}
+
+export const bikashPaymentCallbackControll = async (req: Request, res: Response) => {
+    const { paymentID, status } = req.query;
+    if (status === "cancel") {
+        return res.redirect(`http://localhost:3000/payment_cancel`);
+    }
+    if (status === "fail") {
+        return res.redirect(`http://localhost:3000/payment_fail`);
+    }
+    if (status === "success") {
+        return res.redirect(`http://localhost:3000/payment_success`);
+    }
+}
