@@ -3,7 +3,9 @@ dotenv.config();
 
 type envTypes = {
     port: number,
-    db_url: string
+    db_url: string,
+    frontend_url: string,
+    backend_url: string,
     jwt_secret: string,
     cloud_name: string
     cloudinary_api_key: string,
@@ -23,6 +25,8 @@ type envTypes = {
 export const config: envTypes = {
     port: Number(process.env.PORT) || 5000,
     db_url: process.env.DB_URL || "",
+    frontend_url: process.env.FRONTEND_URL || "",
+    backend_url: process.env.BACKEND_URL || "",
     jwt_secret: process.env.JWT_SECRET || "",
     cloud_name: process.env.CLOUDINARY_NAME || "",
     cloudinary_api_key: process.env.CLOUDINARY_API_KEY || "",

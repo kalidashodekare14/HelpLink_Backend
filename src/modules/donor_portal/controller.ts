@@ -39,10 +39,10 @@ export const bikashPaymentCallbackControll = async (req: Request, res: Response)
     const { status } = req.query;
     const paymentID = req.query.paymentID as string
     if (status === "cancel") {
-        return res.redirect(`http://localhost:3000/payment_cancel`);
+        return res.redirect(`${config.frontend_url}/payment_cancel`);
     }
     if (status === "fail") {
-        return res.redirect(`http://localhost:3000/payment_fail`);
+        return res.redirect(`${config.frontend_url}/payment_fail`);
     }
     if (status === "success") {
         try {
@@ -80,7 +80,7 @@ export const bikashPaymentCallbackControll = async (req: Request, res: Response)
                         }
                     )
                 }
-                return res.redirect(`http://localhost:3000/payment_success`);
+                return res.redirect(`${config.frontend_url}/payment_success`);
             }
         } catch (error) {
             console.log(error);

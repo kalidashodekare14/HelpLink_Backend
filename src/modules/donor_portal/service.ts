@@ -67,7 +67,7 @@ export const donorService = {
             const createPayment = await axios.post(config.bkash_create_payment_url, {
                 mode: "0011",
                 payerReference: " ",
-                callbackURL: "http://localhost:5000/api/v1/donor/bikash_payment_callback",
+                callbackURL: `${config.backend_url}/api/v1/donor/bikash_payment_callback`,
                 amount: paymentInfo.amount || 0,
                 currency: "BDT",
                 intent: "sale",
