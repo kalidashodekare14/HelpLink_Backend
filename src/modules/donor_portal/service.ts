@@ -1,8 +1,17 @@
 import { Campaign } from "../../model/campaign.model";
 import { config } from '../../config/env'
 import axios from "axios";
-import mongoose from "mongoose";
+import { Donation } from "../../model/donation.model";
 
+interface Idonation {
+    donor_name: string,
+    donor_email: string,
+    message: string,
+    amount: string,
+    paymentID: string,
+    payment_status: "pending" | "unpaid" | "paid",
+    payment_method: "bKash" | "nagad" | "sslcommerz"
+}
 
 export const donorService = {
     joinCampaign: async (payload: any) => {
@@ -39,10 +48,8 @@ export const donorService = {
         if (!donateData) throw Error("Donate data not found");
         return donateData
     },
-    bikashPayment: async (payload: any) => {
+    bikashPayment: async (paymentInfo: Idonation) => {
         try {
-            const { amount, user_id } = payload;
-
             // Grand Token Generate
             const grandData = await axios.post(config.bkash_grant_token_url, {
                 app_key: config.bkash_api_key,
@@ -60,7 +67,7 @@ export const donorService = {
                 mode: "0011",
                 payerReference: " ",
                 callbackURL: "http://localhost:5000/api/v1/donor/bikash_payment_callback",
-                amount: amount || 0,
+                amount: paymentInfo.amount || 0,
                 currency: "BDT",
                 intent: "sale",
                 merchantInvoiceNumber: Math.random()
@@ -69,11 +76,15 @@ export const donorService = {
                     "Content-Type": "application/json",
                     Accept: "application/json",
                     authorization: grandData.data.id_token,
-                    'x-app-key': process.env.bkash_api_key,
+                    'x-app-key': config.bkash_api_key,
                 }
             })
 
-            console.log('checking bKashUrl', createPayment.data.bkashURL);
+            await Donation.create({
+                ...paymentInfo,
+                paymentID: createPayment.data.paymentID,
+                id_token: grandData.data.id_token
+            });
 
             return {
                 bkashURL: createPayment.data.bkashURL

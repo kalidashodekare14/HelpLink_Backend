@@ -1,6 +1,9 @@
+import axios from "axios";
 import sendResponse from "../../utils/sendResponse";
 import { donorService } from "./service"
 import { Request, Response } from "express"
+import { config } from "../../config/env";
+import { Donation } from "../../model/donation.model";
 
 
 export const donorJoinCampaignControl = async (req: Request, res: Response) => {
@@ -33,7 +36,8 @@ export const bikashPaymentControl = async (req: Request, res: Response) => {
 }
 
 export const bikashPaymentCallbackControll = async (req: Request, res: Response) => {
-    const { paymentID, status } = req.query;
+    const { status } = req.query;
+    const paymentID = req.query.paymentID as string
     if (status === "cancel") {
         return res.redirect(`http://localhost:3000/payment_cancel`);
     }
@@ -41,6 +45,45 @@ export const bikashPaymentCallbackControll = async (req: Request, res: Response)
         return res.redirect(`http://localhost:3000/payment_fail`);
     }
     if (status === "success") {
-        return res.redirect(`http://localhost:3000/payment_success`);
+        try {
+            const paymentInfo = await Donation.findOne({ paymentID });
+            const { data } = await axios.post(config.bkash_execute_payment_url, { paymentID }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    authorization: paymentInfo?.id_token,
+                    'x-app-key': config.bkash_api_key,
+                }
+            })
+            if (data && data.statusCode === "0000") {
+                const statusUpdate = await Donation.findOneAndUpdate(
+                    { paymentID: paymentID },
+                    {
+                        $set: {
+                            payment_status: "Paid"
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                )
+                if (statusUpdate) {
+                    await Donation.findOneAndUpdate(
+                        { paymentID: paymentID },
+                        {
+                            $set: {
+                                id_token: ""
+                            }
+                        },
+                        {
+                            new: true
+                        }
+                    )
+                }
+                return res.redirect(`http://localhost:3000/payment_success`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
