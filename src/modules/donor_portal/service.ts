@@ -4,6 +4,7 @@ import axios from "axios";
 import { Donation } from "../../model/donation.model";
 
 interface Idonation {
+    campaign_id: string,
     donor_name: string,
     donor_email: string,
     message: string,

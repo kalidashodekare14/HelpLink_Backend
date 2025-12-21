@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 
 interface Idonation {
+    campaign_id: string,
     donor_name: string,
     donor_email: string,
     message: string,
@@ -13,6 +14,7 @@ interface Idonation {
 
 const donationSchema = new Schema<Idonation>(
     {
+        campaign_id: { type: String, required: true },
         donor_name: { type: String, required: true },
         donor_email: { type: String, required: true },
         message: { type: String, required: true },
