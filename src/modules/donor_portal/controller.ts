@@ -87,3 +87,35 @@ export const bikashPaymentCallbackControll = async (req: Request, res: Response)
         }
     }
 }
+
+export const sslcommerzPaymentControll = async (req: Request, res: Response) => {
+    const result = await donorService.sllcommerzPayment(req.body);
+    sendResponse(res, {
+        success: true,
+        message: "SSLCommerz Payment Successfully",
+        data: result
+    })
+}
+
+export const sslcommerzPaymentSuccessControll = async (req: Request, res: Response) => {
+    // Handle SSLCommerz payment success callback here
+    const { status, tran_id } = req.body;
+    console.log('SSLCommerz Callback Data', req.body);
+
+    if (status === "VALID") {
+        await Donation.findOneAndUpdate(
+            { paymentID: tran_id },
+            {
+                $set: {
+                    payment_status: "Paid"
+                }
+            },
+            {
+                new: true
+            }
+        )
+        return res.redirect(`${config.frontend_url}/payment_success`);
+    } else {
+        return res.redirect(`${config.frontend_url}/payment_fail`);
+    }
+}

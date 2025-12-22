@@ -19,6 +19,9 @@ type envTypes = {
     bkash_create_payment_url: string,
     bkash_execute_payment_url: string,
     bkash_refund_transaction_url: string,
+    // SSLCommerz Info
+    ssl_commerz_store_id: string,
+    ssl_commerz_store_password: string
 }
 
 
@@ -39,5 +42,8 @@ export const config: envTypes = {
     bkash_grant_token_url: process.env.bKASH_GRANT_TOKEN_URL || "",
     bkash_create_payment_url: process.env.bKASH_CREATE_PAYMENT_URL || "",
     bkash_execute_payment_url: process.env.bkASH_EXECUTE_PAYMENT_URL || "",
-    bkash_refund_transaction_url: process.env.bKASH_REFUND_TRANSACTION_URL || ""
+    bkash_refund_transaction_url: process.env.bKASH_REFUND_TRANSACTION_URL || "",
+    // SSLCommerz Info
+    ssl_commerz_store_id: process.env.SSL_COMMERZ_STORE_ID || "",
+    ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD || ""
 }

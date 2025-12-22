@@ -3,7 +3,7 @@ import { config } from '../../config/env'
 import axios from "axios";
 import { Donation } from "../../model/donation.model";
 import { Types } from "mongoose";
-import { id } from "zod/v4/locales";
+import { id, sl } from "zod/v4/locales";
 
 interface Idonation {
     campaign_id: string,
@@ -114,4 +114,60 @@ export const donorService = {
 
         }
     },
+    sllcommerzPayment: async (paymentInfo: Idonation) => {
+        try {
+            const tnxId = new Types.ObjectId().toString();
+
+            const initateData = {
+                store_id: config.ssl_commerz_store_id,
+                store_passwd: config.ssl_commerz_store_password,
+                total_amount: paymentInfo.amount || 0,
+                currency: "BDT",
+                tran_id: tnxId,
+                success_url: `${config.backend_url}/api/v1/donor/sslcommerz_payment_success`,
+                fail_url: "",
+                cancel_url: "",
+                cus_name: paymentInfo?.donor_name || "None",
+                cus_email: paymentInfo?.donor_email || "None",
+                cus_add1: "Dhaka",
+                cus_add2: "Dhaka",
+                cus_city: "None",
+                cus_state: "Dhaka",
+                cus_postcode: "None",
+                cus_country: "Bangladesh",
+                cus_phone: "None",
+                cus_fax: "01711111111",
+                shipping_method: "NO",
+                product_name: "None",
+                product_category: "None",
+                product_profile: "general",
+                multi_card_name: "mastercard,visacard,amexcard",
+                value_a: "ref001_A&",
+                value_b: "ref002_B&",
+                value_c: "ref003_C&",
+                value_d: "ref004_D",
+            };
+            const response = await axios({
+                method: "POST",
+                url: "https://sandbox.sslcommerz.com/gwprocess/v4/api.php",
+                data: initateData,
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded",
+                },
+            });
+            console.log('SSLCommerz Response', response.data.GatewayPageURL);
+            const saveData = await Donation.create({
+                ...paymentInfo,
+                paymentID: tnxId,
+            });
+            if (saveData) {
+                return {
+                    GatewayPageURL: response.data.GatewayPageURL
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
+

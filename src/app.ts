@@ -19,6 +19,7 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.send(`
@@ -35,8 +36,8 @@ app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/public", publicRoutes);
 app.use("/api/v1/profile", userRoutes);
 app.use("/api/v1/receiver", receiverRoutes); // roleVerify("receiver"),
-app.use("/api/v1/donor",  donorRoutes); //roleVerify("donor"),
-app.use("/api/v1/volunteer",  volunteerRoutes); //roleVerify("volunteer"),
-app.use("/api/v1/admin",  adminRoutes); //roleVerify("admin"),
+app.use("/api/v1/donor", donorRoutes); //roleVerify("donor"),
+app.use("/api/v1/volunteer", volunteerRoutes); //roleVerify("volunteer"),
+app.use("/api/v1/admin", adminRoutes); //roleVerify("admin"),
 
 export default app;
