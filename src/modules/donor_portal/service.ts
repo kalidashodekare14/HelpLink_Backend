@@ -125,8 +125,8 @@ export const donorService = {
                 currency: "BDT",
                 tran_id: tnxId,
                 success_url: `${config.backend_url}/api/v1/donor/sslcommerz_payment_success`,
-                fail_url: "",
-                cancel_url: "",
+                fail_url: `${config.backend_url}/api/v1/donor/sslcommerz_payment_fail`,
+                cancel_url: `${config.backend_url}/api/v1/donor/sslcommerz_payment_cancel`,
                 cus_name: paymentInfo?.donor_name || "None",
                 cus_email: paymentInfo?.donor_email || "None",
                 cus_add1: "Dhaka",
@@ -155,7 +155,6 @@ export const donorService = {
                     "content-type": "application/x-www-form-urlencoded",
                 },
             });
-            console.log('SSLCommerz Response', response.data.GatewayPageURL);
             const saveData = await Donation.create({
                 ...paymentInfo,
                 paymentID: tnxId,

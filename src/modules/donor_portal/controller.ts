@@ -119,3 +119,13 @@ export const sslcommerzPaymentSuccessControll = async (req: Request, res: Respon
         return res.redirect(`${config.frontend_url}/payment_fail`);
     }
 }
+
+export const sslcommerzPaymentFailControll = async (req: Request, res: Response) => {
+    // Handle SSLCommerz payment fail callback here
+    return res.redirect(`${config.frontend_url}/payment_fail`);
+}
+
+export const sslcommerzPaymentCancelControll = async (req: Request, res: Response) => {
+    // Handle SSLCommerz payment cancel callback here
+    return res.redirect(`${config.frontend_url}/payment_cancel`);
+}
