@@ -9,7 +9,9 @@ interface Idonation {
     paymentID: string,
     id_token: string,
     payment_status: "Pending" | "Unpaid" | "Paid",
-    payment_method: "Bikash" | "Nagad" | "SSLCommerz"
+    payment_method: "Bikash" | "Nagad" | "SSLCommerz",
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 const donationSchema = new Schema<Idonation>(

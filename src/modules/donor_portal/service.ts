@@ -2,6 +2,8 @@ import { Campaign } from "../../model/campaign.model";
 import { config } from '../../config/env'
 import axios from "axios";
 import { Donation } from "../../model/donation.model";
+import { Types } from "mongoose";
+import { id } from "zod/v4/locales";
 
 interface Idonation {
     campaign_id: string,
@@ -41,13 +43,30 @@ export const donorService = {
     },
     donateTrack: async (payload: any) => {
         const email = payload;
-        const donateData = await Campaign.find(
-            {
-                "donors.donor_email": email
+        console.log('email check', email);
+        const donationData = await Donation.find({ donor_email: email });
+
+        const campaignIds = [...new Set(donationData.map((donation) => donation.campaign_id.toString()))];
+
+        const campaignData = await Campaign.find({ _id: { $in: campaignIds } }).lean();
+        const campaignMap = new Map(campaignData.map(c => [c._id.toString(), c]));
+        const result = campaignIds.map(campaignId => {
+            const campaign = campaignMap.get(campaignId);
+            const donationDetails = donationData
+                .filter(d => d.campaign_id.toString() === campaignId)
+                .map(d => ({
+                    amount: d.amount,
+                    payment_status: d.payment_status,
+                    payment_method: d.payment_method,
+                    date: d.createdAt
+                }))
+            return {
+                ...campaign,
+                donationDetails: donationDetails
             }
-        )
-        if (!donateData) throw Error("Donate data not found");
-        return donateData
+        });
+
+        return result;
     },
     bikashPayment: async (paymentInfo: Idonation) => {
         try {
