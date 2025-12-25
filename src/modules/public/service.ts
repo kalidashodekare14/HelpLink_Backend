@@ -7,7 +7,9 @@ export const publicService = {
         const { search, severity, category, division, district, upazila, page, limit } = query;
         console.log('checking frontend data', division, district, upazila);
         console.log('checking search', search);
-        const filter: any = {}
+        const filter: any = {
+            request_status: { $regex: "Approved", $options: "i" }
+        }
         if (category) filter.category = { $regex: category, $options: "i" };
         if (division) filter["location.division"] = { $regex: division, $options: "i" };
         if (district) filter["location.district"] = { $regex: district, $options: "i" };
