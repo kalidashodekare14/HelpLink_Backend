@@ -16,7 +16,7 @@ const app = express();
 app.use(cors({
     origin: ["http://localhost:3000"],
     credentials: true
-}))
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/public", publicRoutes);
 app.use("/api/v1/profile", userRoutes);
-app.use("/api/v1/receiver", roleVerify("receiver"), receiverRoutes);
+app.use("/api/v1/receiver", receiverRoutes); //roleVerify("receiver"),
 app.use("/api/v1/donor", roleVerify("donor"), donorRoutes);
 app.use("/api/v1/volunteer", roleVerify("volunteer"), volunteerRoutes);
 app.use("/api/v1/admin", roleVerify("admin"), adminRoutes);

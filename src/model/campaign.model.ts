@@ -12,6 +12,10 @@ export interface ICampaign {
         upazila: string,
         address: string
     };
+    situation: {
+        severity: "High" | "Medium" | "Low",
+        score: number
+    };
     request_status?: "Pending" | "Approved" | "Rejected";
     delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled";
     receiver_email: string;
@@ -42,6 +46,14 @@ const campaignSchema = new Schema<ICampaign>(
             district: { type: String, required: true },
             upazila: { type: String, required: true },
             address: { type: String, required: true }
+        },
+        situation: {
+            severity: {
+                type: String,
+                enum: ["High", "Medium", "Low"],
+                required: true
+            },
+            score: { type: Number, required: true }
         },
         request_status: {
             type: String,

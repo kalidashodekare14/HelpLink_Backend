@@ -7,7 +7,7 @@ type envTypes = {
     frontend_url: string,
     backend_url: string,
     jwt_secret: string,
-    cloud_name: string
+    cloud_name: string,
     cloudinary_api_key: string,
     cloudinary_api_secret: string,
     // bKash Info
@@ -21,7 +21,8 @@ type envTypes = {
     bkash_refund_transaction_url: string,
     // SSLCommerz Info
     ssl_commerz_store_id: string,
-    ssl_commerz_store_password: string
+    ssl_commerz_store_password: string,
+    gemini_api_key: string
 }
 
 
@@ -45,5 +46,6 @@ export const config: envTypes = {
     bkash_refund_transaction_url: process.env.bKASH_REFUND_TRANSACTION_URL || "",
     // SSLCommerz Info
     ssl_commerz_store_id: process.env.SSL_COMMERZ_STORE_ID || "",
-    ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD || ""
-}
+    ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD || "",
+    gemini_api_key: process.env.GEMINI_API_KEY || ""
+};
