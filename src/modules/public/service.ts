@@ -4,7 +4,7 @@ import { Campaign } from "../../model/campaign.model"
 
 export const publicService = {
     totalCampaigns: async (query: any) => {
-        const { search, category, division, district, upazila, page, limit } = query;
+        const { search, severity, category, division, district, upazila, page, limit } = query;
         console.log('checking frontend data', division, district, upazila);
         console.log('checking search', search);
         const filter: any = {}
@@ -17,6 +17,8 @@ export const publicService = {
                 { title: { $regex: search, $options: "i" } }
             ]
         }
+
+        if (severity) filter["situation.severity"] = { $regex: severity, $options: "i" };
 
         let pageData = Number(page) || 1;
         let limitData = Number(limit) || 10;

@@ -47,5 +47,6 @@ export const config: envTypes = {
     // SSLCommerz Info
     ssl_commerz_store_id: process.env.SSL_COMMERZ_STORE_ID || "",
     ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD || "",
+    // Gemini API Key
     gemini_api_key: process.env.GEMINI_API_KEY || ""
 };
