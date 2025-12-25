@@ -1,3 +1,4 @@
+import cloudinary from "../../config/cloudinary";
 import { config } from "../../config/env";
 import { Campaign } from "../../model/campaign.model";
 import { GoogleGenAI } from "@google/genai";
@@ -7,7 +8,8 @@ export const receiverService = {
 
     helpRequestPost: async (payload: any) => {
         const requestData = payload;
-        console.log('payload received in service', payload);
+
+        //    AI content generation
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-lite",
             contents: `
@@ -29,13 +31,13 @@ export const receiverService = {
             "${payload.title}"
             `,
         });
-        
         if (!response.text) {
             throw new Error('Failed to get a valid response from AI model');
         }
+        // Parse the AI response
         const parsed = JSON.parse(response.text);
 
-
+        // Save to database
         const requestSave = await Campaign.create({
             ...requestData,
             situation: {
@@ -44,7 +46,26 @@ export const receiverService = {
             },
             request_status: parsed.score >= 69 ? "Approved" : "Pending"
         });
+
+
         return requestSave;
+    },
+    campaignImageUpload: async (payload: any) => {
+        const files = payload;
+        const imageUrls: string[] = [];
+        for (const file of files) {
+            const base64 = file.buffer.toString("base64");
+            const dataUri = `data:${file.mimetype};base64,${base64}`;
+
+            const uploadImage = await cloudinary.uploader.upload(dataUri, {
+                folder: "campaigns"
+            })
+            if (!uploadImage.url) throw new Error("Image not uploaded");
+            console.log('all uploaded images', uploadImage);
+            imageUrls.push(uploadImage.url);
+        }
+        return imageUrls;
+
     },
     trackRequest: async (payload: any) => {
         const email = payload;

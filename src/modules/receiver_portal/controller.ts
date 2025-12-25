@@ -3,30 +3,21 @@ import { receiverService } from "./service"
 import { Request, Response } from "express";
 
 
-
-// export const receiverProfileControl = async (req: Request, res: Response) => {
-//     const result = await receiverService.receiverProfile(req.params.email);
-//     sendResponse(res, {
-//         success: true,
-//         message: "Receiver Profile successfully!",
-//         data: result
-//     })
-// }
-
-// export const receiverProfileUpdateControl = async (req: Request, res: Response) => {
-//     const result = await receiverService.receiverProfileUpdate({ email: req.params.email, receiverData: req.body });
-//     sendResponse(res, {
-//         success: true,
-//         message: "Receiver Profile Update successfully!",
-//         data: result
-//     })
-// }
-
 export const receiverRequestControl = async (req: Request, res: Response) => {
     const result = await receiverService.helpRequestPost(req.body);
     sendResponse(res, {
         success: true,
         message: "Receiver Request successfully!",
+        data: result
+    })
+}
+
+export const campaignImageUploadControl = async (req: Request, res: Response) => {
+
+    const result = await receiverService.campaignImageUpload(req.files);
+    sendResponse(res, {
+        success: true,
+        message: "Campaign Image Upload successfully!",
         data: result
     })
 }
