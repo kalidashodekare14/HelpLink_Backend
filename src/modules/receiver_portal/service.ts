@@ -120,5 +120,10 @@ export const receiverService = {
             { new: true }
         );
         return updatedCampaign;
+    },
+    campaignRequestDelete: async (id: any) => {
+        console.log('checking error', id);
+        const campaignDelete = await Campaign.findByIdAndDelete(id);
+        return campaignDelete
     }
 }

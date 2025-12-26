@@ -54,3 +54,12 @@ export const campaignRequestUpdateControl = async (req: Request, res: Response) 
         data: result
     })
 }
+
+export const campaignRequestDeleteControll = async (req: Request, res: Response) => {
+    const result = await receiverService.campaignRequestDelete(req.params.id);
+    sendResponse(res, {
+        success: true,
+        message: "Campaign Request Delete successfully!",
+        data: result
+    })
+}
