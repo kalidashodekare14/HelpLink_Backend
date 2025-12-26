@@ -72,5 +72,15 @@ export const receiverService = {
         console.log('received email', email);
         const trackData = await Campaign.find({ receiver_email: email });
         return trackData;
+    },
+    campaignRequestInfo: async (payload: any) => {
+        const campaignId = payload;
+        const campaignData = await Campaign.findById(campaignId);
+        return campaignData;
+    },
+    campaignRequestUpdate: async (payload: any) => {
+        const { campaignId, updateData } = payload;
+        const updatedCampaign = await Campaign.findByIdAndUpdate(campaignId, updateData, { new: true });
+        return updatedCampaign;
     }
 }

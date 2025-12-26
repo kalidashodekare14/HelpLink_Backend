@@ -31,3 +31,26 @@ export const trackRequestControl = async (req: Request, res: Response) => {
         data: result
     })
 }
+
+
+export const campaignRequestInfoControl = async (req: Request, res: Response) => {
+    const result = await receiverService.campaignRequestInfo(req.params.id);
+    sendResponse(res, {
+        success: true,
+        message: "Campaign Request Info successfully!",
+        data: result
+    })
+}
+
+export const campaignRequestUpdateControl = async (req: Request, res: Response) => {
+    const campaignInfo = {
+        campaignId: req.params.id,
+        updateData: req.body
+    }
+    const result = await receiverService.campaignRequestUpdate(campaignInfo);
+    sendResponse(res, {
+        success: true,
+        message: "Campaign Request Update successfully!",
+        data: result
+    })
+}
