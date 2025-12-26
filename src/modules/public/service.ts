@@ -44,5 +44,5 @@ export const publicService = {
         const id = payload;
         const campaign = await Campaign.findById(id);
         return campaign;
-    }
+    },
 }
