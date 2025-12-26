@@ -61,7 +61,6 @@ export const receiverService = {
                 folder: "campaigns"
             })
             if (!uploadImage.url) throw new Error("Image not uploaded");
-            console.log('all uploaded images', uploadImage);
             imageUrls.push(uploadImage.url);
         }
         return imageUrls;
@@ -80,7 +79,46 @@ export const receiverService = {
     },
     campaignRequestUpdate: async (payload: any) => {
         const { campaignId, updateData } = payload;
-        const updatedCampaign = await Campaign.findByIdAndUpdate(campaignId, updateData, { new: true });
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash-lite",
+            contents: `
+            You are an AI disaster response system.
+            Classify the following help request into High, Medium, or Low severity.
+
+            Return ONLY valid JSON.
+            Do NOT use markdown.
+            Do NOT use backticks.
+            Do NOT explain anything.
+
+            JSON format:
+            {
+                "severity": "High | Medium | Low",
+                "score": number (0  to 100)
+            }
+
+            Help Request:
+            "${updateData.title}"
+            `,
+        });
+        if (!response.text) {
+            throw new Error('Failed to get a valid response from AI model');
+        }
+        // Parse the AI response
+        const parsed = JSON.parse(response.text);
+
+        const updatedCampaign = await Campaign.findByIdAndUpdate(
+            campaignId,
+            {
+                ...updateData,
+                situation: {
+                    severity: parsed.severity,
+                    score: parsed.score
+                },
+                request_status: parsed.score >= 69 ? "Approved" : "Pending"
+            },
+            { new: true }
+        );
         return updatedCampaign;
     }
 }
