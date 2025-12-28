@@ -22,7 +22,9 @@ type envTypes = {
     // SSLCommerz Info
     ssl_commerz_store_id: string,
     ssl_commerz_store_password: string,
-    gemini_api_key: string
+    gemini_api_key: string,
+    // Open Weather Api
+    open_weather_api: string,
 }
 
 
@@ -48,5 +50,7 @@ export const config: envTypes = {
     ssl_commerz_store_id: process.env.SSL_COMMERZ_STORE_ID || "",
     ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD || "",
     // Gemini API Key
-    gemini_api_key: process.env.GEMINI_API_KEY || ""
+    gemini_api_key: process.env.GEMINI_API_KEY || "",
+    // Open Weather Api
+    open_weather_api: process.env.OPEN_WEATHER_API || "",
 };

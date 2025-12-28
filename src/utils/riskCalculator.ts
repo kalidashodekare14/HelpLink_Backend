@@ -1,0 +1,75 @@
+type RiskResult = {
+  score: number;
+  level: "Low" | "Medium" | "High" | "Extreme";
+  reasons: string[];
+};
+
+export function calculateRisk(weather: any): RiskResult {
+  let score = 0;
+  const reasons: string[] = [];
+
+  const temp = weather.main.temp;
+  const feelsLike = weather.main.feels_like;
+  const humidity = weather.main.humidity;
+  const pressure = weather.main.pressure;
+  const windSpeed = weather.wind.speed;
+  const rain1h = weather.rain?.["1h"] || 0;
+  const condition = weather.weather[0].main;
+
+  // Rain
+  if (rain1h >= 30) {
+    score += 30;
+    reasons.push("Flood risk");
+  } else if (rain1h >= 10) {
+    score += 20;
+    reasons.push("Heavy rain");
+  }
+
+  // Wind
+  if (windSpeed >= 20) {
+    score += 30;
+    reasons.push("Storm danger");
+  } else if (windSpeed >= 10) {
+    score += 15;
+    reasons.push("Strong wind");
+  }
+
+  // Heat
+  if (feelsLike >= 40) {
+    score += 25;
+    reasons.push("Extreme heat");
+  } else if (temp >= 35) {
+    score += 15;
+    reasons.push("High temperature");
+  }
+
+  // Pressure
+  if (pressure < 990) {
+    score += 25;
+    reasons.push("Severe pressure drop");
+  } else if (pressure < 1000) {
+    score += 15;
+    reasons.push("Low pressure");
+  }
+
+  // Humidity
+  if (humidity > 85) {
+    score += 10;
+    reasons.push("High humidity");
+  }
+
+  // Weather condition
+  if (condition === "Thunderstorm") {
+    score += 40;
+    reasons.push("Thunderstorm");
+  }
+
+  score = Math.min(score, 100);
+
+  let level: RiskResult["level"] = "Low";
+  if (score >= 80) level = "Extreme";
+  else if (score >= 60) level = "High";
+  else if (score >= 30) level = "Medium";
+
+  return { score, level, reasons };
+}

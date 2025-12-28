@@ -1,8 +1,10 @@
 import { config } from "../../config/env";
+import { User } from "../../model/user.model";
 import sendResponse from "../../utils/sendResponse";
 import { publicService } from "./service"
 import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+
 
 
 export const totalCampaignsControll = async (req: Request, res: Response) => {
@@ -31,11 +33,25 @@ export const userRolecontroll = async (req: Request, res: Response) => {
 
     const decoded = jwt.verify(token, config.jwt_secret) as JwtPayload;
 
+    const userInfo = await User.findById(decoded.id);
+
     sendResponse(res, {
         success: true,
         message: "User Role Successfully",
         data: {
-            role: decoded.role
+            role: userInfo?.role,
+            image: userInfo?.image,
+            name: userInfo?.name
         }
+    })
+}
+
+
+export const weatherRiskTrackControll = async (req: Request, res: Response) => {
+    const result = await publicService.weatherRiskTrack();
+    sendResponse(res, {
+        success: true,
+        message: "Weather Data Get Successfully",
+        data: result
     })
 }
