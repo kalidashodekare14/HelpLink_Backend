@@ -82,7 +82,8 @@ export const adminService = {
     },
     // Campaign Manage
     allCampaigns: async (query: any) => {
-        const { search, request_status, delivery_status } = query;
+        const { search, request_status, delivery_status, situation } = query;
+        console.log('checking severity', situation)
 
         const filter: any = {}
 
@@ -92,6 +93,12 @@ export const adminService = {
 
         if (delivery_status) {
             filter.delivery_status = { $regex: delivery_status, $options: "i" }
+        }
+
+        if (situation) {
+            filter.$or = [
+                { "situation.severity": { $regex: situation, $options: "i" } }
+            ]
         }
 
         if (search) {
