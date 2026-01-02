@@ -30,7 +30,7 @@ export const userRolecontroll = async (req: Request, res: Response) => {
     if (!token) {
         return res.status(401).json({ message: "Access denied. No token provided." })
     }
-
+    
     const decoded = jwt.verify(token, config.jwt_secret) as JwtPayload;
 
     const userInfo = await User.findById(decoded.id);

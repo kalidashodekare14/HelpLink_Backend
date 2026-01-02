@@ -6,6 +6,7 @@ export interface IUser {
     name: string,
     email: string,
     password: string,
+    isSocial: boolean,
     role?: "admin" | "donor" | "receiver" | "volunteer",
     isActive: boolean,
     gender: string,
@@ -23,10 +24,18 @@ const userSchema = new Schema<IUser>(
         image: { type: String },
         name: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, lowercase: true },
-        password: { type: String, required: true, minLength: 6 },
+        password: {
+            type: String,
+            required: function (this: { isSocial: boolean }): boolean {
+                return !this.isSocial
+            },
+            minLength: 6,
+
+        },
+        isSocial: { type: Boolean, default: false },
         role: { type: String, enum: ["admin", "donor", "receiver", "volunteer"], default: "receiver" },
         isActive: { type: Boolean, required: true, default: true },
-        gender: { type: String},
+        gender: { type: String },
         location: {
             division: { type: String },
             district: { type: String },

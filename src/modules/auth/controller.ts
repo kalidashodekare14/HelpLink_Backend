@@ -21,3 +21,12 @@ export const loginUser = async (req: Request, res: Response) => {
         data: result
     })
 }
+
+export const socialLoginControll = async (req: Request, res: Response) => {
+    const result = await AuthService.socialLogin(req.body);
+    sendResponse(res, {
+        success: true,
+        message: "Social login successfully!",
+        data: result
+    })
+}

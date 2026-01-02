@@ -38,5 +38,40 @@ export const AuthService = {
         })
 
         return { token, user };
+    },
+    socialLogin: async (payload: any) => {
+        const { name, email, image } = payload;
+        const user = await User.findOne({ email })
+        if (!user) {
+            const saveUser = await User.create(
+                {
+                    name: name,
+                    email: email,
+                    image: image,
+                    isSocial: true,
+                }
+            )
+            const token = jwt.sign(
+                { id: saveUser?._id, email: saveUser?.email, role: saveUser?.role },
+                config.jwt_secret,
+                { expiresIn: "7d" }
+            );
+            return {
+                token,
+                user: saveUser
+            }
+        }
+
+        const token = jwt.sign(
+            { id: user?._id, email: user?.email, role: user?.role },
+            config.jwt_secret,
+            { expiresIn: "7d" }
+        );
+
+        return {
+            token,
+            user: user
+        }
+
     }
 }
