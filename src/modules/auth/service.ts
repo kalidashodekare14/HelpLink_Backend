@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from "bcryptjs";
 import { User } from '../../model/user.model';
 import jwt from 'jsonwebtoken';
 import { config } from '../../config/env';

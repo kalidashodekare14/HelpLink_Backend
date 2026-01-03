@@ -1,5 +1,5 @@
 {
-"compilerOptions": {
+  "compilerOptions": {
     // File stracture
     "rootDir": "./src",
     "outDir": "./dist",
@@ -21,13 +21,16 @@
     // Stricter Typechecking Options
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    
+    "exactOptionalPropertyTypes": false,
     // Clean build
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipDefaultLibCheck": true
+    "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node-modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node-modules"
+  ]
 }
