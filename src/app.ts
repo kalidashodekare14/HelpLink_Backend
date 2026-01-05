@@ -13,12 +13,16 @@ import { roleVerify } from './middlewares/roleVerify';
 const app = express();
 
 
-app.use(cors({
-    // origin: ["http://localhost:3000", "https://helplink-frontend.vercel.app"],
-    origin: "https://helplink-frontend.vercel.app",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true
-}));
+// app.use(cors({
+//     // origin: ["http://localhost:3000", "https://helplink-frontend.vercel.app"],
+//     origin: "https://helplink-frontend.vercel.app",
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     credentials: true
+// }));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://helplink-frontend.vercel.app');
+    next();
+});
 app.options("*", cors());
 app.use(express.json());
 app.use(cookieParser());
