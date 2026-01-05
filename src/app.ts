@@ -12,9 +12,22 @@ import { roleVerify } from './middlewares/roleVerify';
 
 const app = express();
 
+const allowedOrigins = [
+    "http://localhost:3000",
+    "https://helplink-frontend.vercel.app"
+];
 
 app.use(cors({
-    origin: ["http://localhost:3000", "https://helplink-frontend.vercel.app"],
+    origin: function (origin, callback) {
+        // allow server-to-server or Postman
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
