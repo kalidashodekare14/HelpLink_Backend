@@ -16,7 +16,8 @@ const app = express();
 app.use(cors({
     origin: ["http://localhost:3000", "https://helplink-frontend.vercel.app"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.options("*", cors());
 app.use(express.json());
