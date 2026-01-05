@@ -5,6 +5,9 @@ import { config } from "../config/env";
 
 export const roleVerify = (...roles: string[]) => {
     return (req: any, res: Response, next: NextFunction) => {
+        if (req.methods === "OPTIONS") {
+            return next();
+        }
         try {
             const token = req.headers.authorization?.split(" ")[1];
 
