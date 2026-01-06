@@ -1,5 +1,14 @@
 import express from 'express';
-import { totalCampaignsControll, campaignDetailsControll, userRolecontroll, weatherRiskTrackControll } from './controller';
+import {
+    totalCampaignsControll,
+    campaignDetailsControll,
+    userRolecontroll,
+    weatherRiskTrackControll,
+    bikashPaymentCallbackControll,
+    sslcommerzPaymentSuccessControll,
+    sslcommerzPaymentFailControll,
+    sslcommerzPaymentCancelControll
+} from './controller';
 const router = express.Router();
 
 
@@ -8,6 +17,9 @@ router.get("/campaign_details/:id", campaignDetailsControll);
 router.get("/user_role", userRolecontroll);
 router.get("/weather_risk_track", weatherRiskTrackControll);
 
-
+router.get('/bikash_payment_callback', bikashPaymentCallbackControll);
+router.post('/sslcommerz_payment_success', sslcommerzPaymentSuccessControll);
+router.post('/sslcommerz_payment_fail', sslcommerzPaymentFailControll);
+router.post('/sslcommerz_payment_cancel', sslcommerzPaymentCancelControll);
 
 export const publicRoutes = router;

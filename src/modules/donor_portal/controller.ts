@@ -35,58 +35,58 @@ export const bikashPaymentControl = async (req: Request, res: Response) => {
     })
 }
 
-export const bikashPaymentCallbackControll = async (req: Request, res: Response) => {
-    const { status } = req.query;
-    const paymentID = req.query.paymentID as string
-    if (status === "cancel") {
-        return res.redirect(`${config.frontend_url}/payment_cancel`);
-    }
-    if (status === "fail") {
-        return res.redirect(`${config.frontend_url}/payment_fail`);
-    }
-    if (status === "success") {
-        try {
-            const paymentInfo = await Donation.findOne({ paymentID });
-            const { data } = await axios.post(config.bkash_execute_payment_url, { paymentID }, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    authorization: paymentInfo?.id_token,
-                    'x-app-key': config.bkash_api_key,
-                }
-            })
-            if (data && data.statusCode === "0000") {
-                const statusUpdate = await Donation.findOneAndUpdate(
-                    { paymentID: paymentID },
-                    {
-                        $set: {
-                            payment_status: "Paid"
-                        }
-                    },
-                    {
-                        new: true
-                    }
-                )
-                if (statusUpdate) {
-                    await Donation.findOneAndUpdate(
-                        { paymentID: paymentID },
-                        {
-                            $set: {
-                                id_token: ""
-                            }
-                        },
-                        {
-                            new: true
-                        }
-                    )
-                }
-                return res.redirect(`${config.frontend_url}/payment_success`);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
+// export const bikashPaymentCallbackControll = async (req: Request, res: Response) => {
+//     const { status } = req.query;
+//     const paymentID = req.query.paymentID as string
+//     if (status === "cancel") {
+//         return res.redirect(`${config.frontend_url}/payment_cancel`);
+//     }
+//     if (status === "fail") {
+//         return res.redirect(`${config.frontend_url}/payment_fail`);
+//     }
+//     if (status === "success") {
+//         try {
+//             const paymentInfo = await Donation.findOne({ paymentID });
+//             const { data } = await axios.post(config.bkash_execute_payment_url, { paymentID }, {
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     Accept: "application/json",
+//                     authorization: paymentInfo?.id_token,
+//                     'x-app-key': config.bkash_api_key,
+//                 }
+//             })
+//             if (data && data.statusCode === "0000") {
+//                 const statusUpdate = await Donation.findOneAndUpdate(
+//                     { paymentID: paymentID },
+//                     {
+//                         $set: {
+//                             payment_status: "Paid"
+//                         }
+//                     },
+//                     {
+//                         new: true
+//                     }
+//                 )
+//                 if (statusUpdate) {
+//                     await Donation.findOneAndUpdate(
+//                         { paymentID: paymentID },
+//                         {
+//                             $set: {
+//                                 id_token: ""
+//                             }
+//                         },
+//                         {
+//                             new: true
+//                         }
+//                     )
+//                 }
+//                 return res.redirect(`${config.frontend_url}/payment_success`);
+//             }
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
 
 export const sslcommerzPaymentControll = async (req: Request, res: Response) => {
     const result = await donorService.sllcommerzPayment(req.body);
@@ -97,35 +97,35 @@ export const sslcommerzPaymentControll = async (req: Request, res: Response) => 
     })
 }
 
-export const sslcommerzPaymentSuccessControll = async (req: Request, res: Response) => {
-    // Handle SSLCommerz payment success callback here
-    const { status, tran_id } = req.body;
-    console.log('SSLCommerz Callback Data', req.body);
+// export const sslcommerzPaymentSuccessControll = async (req: Request, res: Response) => {
+//     // Handle SSLCommerz payment success callback here
+//     const { status, tran_id } = req.body;
+//     console.log('SSLCommerz Callback Data', req.body);
 
-    if (status === "VALID") {
-        await Donation.findOneAndUpdate(
-            { paymentID: tran_id },
-            {
-                $set: {
-                    payment_status: "Paid"
-                }
-            },
-            {
-                new: true
-            }
-        )
-        return res.redirect(`${config.frontend_url}/payment_success`);
-    } else {
-        return res.redirect(`${config.frontend_url}/payment_fail`);
-    }
-}
+//     if (status === "VALID") {
+//         await Donation.findOneAndUpdate(
+//             { paymentID: tran_id },
+//             {
+//                 $set: {
+//                     payment_status: "Paid"
+//                 }
+//             },
+//             {
+//                 new: true
+//             }
+//         )
+//         return res.redirect(`${config.frontend_url}/payment_success`);
+//     } else {
+//         return res.redirect(`${config.frontend_url}/payment_fail`);
+//     }
+// }
 
-export const sslcommerzPaymentFailControll = async (req: Request, res: Response) => {
-    // Handle SSLCommerz payment fail callback here
-    return res.redirect(`${config.frontend_url}/payment_fail`);
-}
+// export const sslcommerzPaymentFailControll = async (req: Request, res: Response) => {
+//     // Handle SSLCommerz payment fail callback here
+//     return res.redirect(`${config.frontend_url}/payment_fail`);
+// }
 
-export const sslcommerzPaymentCancelControll = async (req: Request, res: Response) => {
-    // Handle SSLCommerz payment cancel callback here
-    return res.redirect(`${config.frontend_url}/payment_cancel`);
-}
+// export const sslcommerzPaymentCancelControll = async (req: Request, res: Response) => {
+//     // Handle SSLCommerz payment cancel callback here
+//     return res.redirect(`${config.frontend_url}/payment_cancel`);
+// }
