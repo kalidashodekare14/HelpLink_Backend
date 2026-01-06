@@ -10,7 +10,20 @@
     {
       "src": "/(.*)",
       "dest": "dist/server.js",
-      "methods": ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"]
+      "methods": [
+        "GET",
+        "POST",
+        "PATCH",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+      ],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://helplink-frontend.vercel.app",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true"
+      }
     }
   ]
 }
