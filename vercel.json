@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/server.js",
+      "src": "src/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/server.js",
+      "dest": "src/server.js",
       "methods": [
         "GET",
         "POST",
@@ -17,13 +17,8 @@
         "PUT",
         "DELETE",
         "OPTIONS"
-      ],
-      "headers": {
-        "Access-Control-Allow-Origin": "https://helplink-frontend.vercel.app",
-        "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": "true"
-      }
+      ]
+      
     }
   ]
 }
