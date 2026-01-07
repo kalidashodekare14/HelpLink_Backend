@@ -7,9 +7,9 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/entry/local.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/entry/local.js"
   },
   "dependencies": {
     "@google/genai": "^1.31.0",
@@ -37,6 +37,7 @@
     "@types/mongodb": "^4.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/multer": "^2.0.0",
+    "@vercel/node": "^5.5.16",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
