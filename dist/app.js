@@ -15,10 +15,14 @@ const routes_6 = require("./modules/admin_portal/routes");
 const routes_7 = require("./modules/public/routes");
 const roleVerify_1 = require("./middlewares/roleVerify");
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: ["http://localhost:3000"],
+const corsOptions = {
+    origin: ["http://localhost:3000", "https://helplink-frontend.vercel.app"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
-}));
+};
+app.use((0, cors_1.default)(corsOptions));
+// app.options("*", cors(corsOptions));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));

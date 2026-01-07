@@ -35,24 +35,6 @@ const campaignSchema = new mongoose_1.Schema({
         default: "Assigned"
     },
     receiver_email: { type: String, required: true },
-    donors: [
-        {
-            donor_name: { type: String, required: true },
-            donor_email: { type: String, required: true },
-            amount: { type: Number, required: true },
-            message: { type: String, required: true },
-            date: { type: Date, required: true },
-            payment_status: {
-                type: String,
-                enum: ["Unpaid", "Paid", "Cancelled"],
-                default: "Unpaid"
-            },
-            payment_method: {
-                type: String,
-                enum: ["Bkash", "Nagad", "SSLCommerz"]
-            }
-        }
-    ],
 }, { timestamps: true });
 exports.Campaign = (0, mongoose_1.model)("campaign", campaignSchema);
 //# sourceMappingURL=campaign.model.js.map

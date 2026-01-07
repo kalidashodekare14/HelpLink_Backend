@@ -16,17 +16,6 @@ export interface ICampaign {
     request_status?: "Pending" | "Approved" | "Rejected";
     delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled";
     receiver_email: string;
-    donors: [
-        {
-            donor_name: string;
-            donor_email: string;
-            amount: number;
-            message: string;
-            date: Date;
-            payment_status: "Unpaid" | "Paid" | "Cancelled";
-            payment_method: "Bkash" | "Nagad" | "SSLCommerz";
-        }
-    ];
 }
 export declare const Campaign: import("mongoose").Model<ICampaign, {}, {}, {}, import("mongoose").Document<unknown, {}, ICampaign, {}, {}> & ICampaign & {
     _id: import("mongoose").Types.ObjectId;

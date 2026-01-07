@@ -8,6 +8,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = require("../config/env");
 const roleVerify = (...roles) => {
     return (req, res, next) => {
+        if (req.methods === "OPTIONS") {
+            return next();
+        }
         try {
             const token = req.headers.authorization?.split(" ")[1];
             if (!token) {

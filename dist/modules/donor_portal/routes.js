@@ -14,12 +14,12 @@ router.get('/donate_track/:email', controller_1.donateTrackControl);
 // Bikash Payment Routes
 router.post('/bikash_payment', controller_1.bikashPaymentControl);
 // Bikash Payment Callback
-router.get('/bikash_payment_callback', controller_1.bikashPaymentCallbackControll);
+// router.get('/bikash_payment_callback', bikashPaymentCallbackControll);
 // SSLCommerz Payment Routes
 router.post('/sslcommerz_payment', controller_1.sslcommerzPaymentControll);
 // SSLCommerz Payment Callbacks
-router.post('/sslcommerz_payment_success', controller_1.sslcommerzPaymentSuccessControll);
-router.post('/sslcommerz_payment_fail', controller_1.sslcommerzPaymentFailControll);
-router.post('/sslcommerz_payment_cancel', controller_1.sslcommerzPaymentCancelControll);
+// router.post('/sslcommerz_payment_success', sslcommerzPaymentSuccessControll);
+// router.post('/sslcommerz_payment_fail', sslcommerzPaymentFailControll);
+// router.post('/sslcommerz_payment_cancel', sslcommerzPaymentCancelControll);
 exports.donorRoutes = router;
 //# sourceMappingURL=routes.js.map

@@ -11,9 +11,9 @@ export declare const donorJoinCampaignValidation: z.ZodObject<{
             Paid: "Paid";
         }>>;
         payment_method: z.ZodOptional<z.ZodEnum<{
-            Bkash: "Bkash";
             Nagad: "Nagad";
             SSLCommerz: "SSLCommerz";
+            Bkash: "Bkash";
         }>>;
     }, z.core.$strip>;
     params: z.ZodObject<{

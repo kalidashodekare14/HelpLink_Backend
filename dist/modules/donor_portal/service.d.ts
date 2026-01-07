@@ -19,7 +19,7 @@ export declare const donorService: {
         donationDetails: {
             amount: string;
             payment_status: "Pending" | "Unpaid" | "Paid";
-            payment_method: "Nagad" | "SSLCommerz" | "Bikash";
+            payment_method: "Bikash" | "Nagad" | "SSLCommerz";
             date: Date | undefined;
         }[];
         image?: string[] | undefined;
@@ -39,15 +39,6 @@ export declare const donorService: {
         request_status?: "Pending" | "Approved" | "Rejected";
         delivery_status?: "Assigned" | "Picked Up" | "Delivered" | "Cancelled";
         receiver_email?: string | undefined;
-        donors?: [import("mongoose").FlattenMaps<{
-            donor_name: string;
-            donor_email: string;
-            amount: number;
-            message: string;
-            date: Date;
-            payment_status: "Unpaid" | "Paid" | "Cancelled";
-            payment_method: "Bkash" | "Nagad" | "SSLCommerz";
-        }>] | undefined;
         _id?: Types.ObjectId | undefined;
         __v?: number | undefined;
     }[]>;
