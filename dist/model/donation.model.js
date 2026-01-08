@@ -5,6 +5,7 @@ const mongoose_1 = require("mongoose");
 const donationSchema = new mongoose_1.Schema({
     campaign_id: { type: String, required: true },
     donor_name: { type: String, required: true },
+    phone_number: { type: Number, required: true },
     donor_email: { type: String, required: true },
     message: { type: String, required: true },
     amount: { type: String, required: true },

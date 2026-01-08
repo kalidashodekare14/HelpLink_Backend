@@ -1,6 +1,7 @@
 interface Idonation {
     campaign_id: string;
     donor_name: string;
+    phone_number: number;
     donor_email: string;
     message: string;
     amount: string;
