@@ -125,19 +125,32 @@ export const sslcommerzPaymentSuccessControll = async (req: Request, res: Respon
                 new: true
             }
         )
-        return res.redirect(`${config.frontend_url}/payment_success`);
+        return res.redirect(
+            303,
+            `${config.frontend_url}/payment_success`
+        );
     } else {
-        return res.redirect(`${config.frontend_url}/payment_fail`);
+
+        return res.redirect(
+            303,
+            `${config.frontend_url}/payment_fail`
+        );
     }
 }
 
 export const sslcommerzPaymentFailControll = async (req: Request, res: Response) => {
     // Handle SSLCommerz payment fail callback here
-    return res.redirect(`${config.frontend_url}/payment_fail`);
+    return res.redirect(
+        303,
+        `${config.frontend_url}/payment_fail`
+    );
 }
 
 export const sslcommerzPaymentCancelControll = async (req: Request, res: Response) => {
     // Handle SSLCommerz payment cancel callback here
-    return res.redirect(`${config.frontend_url}/payment_cancel`);
+    return res.redirect(
+        303,
+        `${config.frontend_url}/payment_cancel`
+    );
 }
 

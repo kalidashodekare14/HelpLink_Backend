@@ -1,19 +1,19 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = handler;
-const app_1 = __importDefault(require("./app"));
-const db_1 = require("./config/db");
-async function handler(req, res) {
-    await (0, db_1.connectdb)();
-    return (0, app_1.default)(req, res);
-}
-// const isLocal = process.env.NODE_ENV !== "production";
-// if (isLocal) {
-//     app.listen(config.port, () => {
-//         console.log(`Server running on port ${config.port}`)
-//     })
+// import app from './app';
+// import { connectdb } from './config/db';
+// import { config } from './config/env';
+// import { VercelRequest, VercelResponse } from "@vercel/node"
+// export default async function handler(
+//     req: VercelRequest,
+//     res: VercelResponse
+// ) {
+//     await connectdb();
+//     return app(req, res);
 // }
+// // const isLocal = process.env.NODE_ENV !== "production";
+// // if (isLocal) {
+// //     app.listen(config.port, () => {
+// //         console.log(`Server running on port ${config.port}`)
+// //     })
+// // }
 //# sourceMappingURL=server.js.map
