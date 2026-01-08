@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 app.use("/api/v1/auth", routes_1.AuthRoutes);
 app.use("/api/v1/public", routes_7.publicRoutes);
 app.use("/api/v1/profile", routes_4.userRoutes);
-app.use("/api/v1/receiver", routes_2.receiverRoutes); //roleVerify("receiver"),
+app.use("/api/v1/receiver", (0, roleVerify_1.roleVerify)("receiver"), routes_2.receiverRoutes);
 app.use("/api/v1/donor", (0, roleVerify_1.roleVerify)("donor"), routes_3.donorRoutes);
 app.use("/api/v1/volunteer", (0, roleVerify_1.roleVerify)("volunteer"), routes_5.volunteerRoutes);
 app.use("/api/v1/admin", (0, roleVerify_1.roleVerify)("admin"), routes_6.adminRoutes);

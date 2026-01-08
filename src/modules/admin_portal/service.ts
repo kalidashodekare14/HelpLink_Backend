@@ -1,4 +1,5 @@
 import { Campaign } from "../../model/campaign.model";
+import { Donation } from "../../model/donation.model";
 import { User } from "../../model/user.model"
 
 
@@ -8,12 +9,12 @@ export const adminService = {
     overviewInfo: async () => {
         const totalUser = await User.countDocuments();
         const totalCampaign = await Campaign.countDocuments();
-        const donationResult = await Campaign.aggregate([
-            { $unwind: "$donors" },
+        const donationResult = await Donation.aggregate([
+            // { $unwind: "$donors" },
             {
                 $group: {
                     _id: null,
-                    totalAmount: { $sum: "$donors.amount" }
+                    totalAmount: { $sum: "$amount" }
                 }
             }
         ])

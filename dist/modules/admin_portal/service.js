@@ -2,17 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminService = void 0;
 const campaign_model_1 = require("../../model/campaign.model");
+const donation_model_1 = require("../../model/donation.model");
 const user_model_1 = require("../../model/user.model");
 exports.adminService = {
     overviewInfo: async () => {
         const totalUser = await user_model_1.User.countDocuments();
         const totalCampaign = await campaign_model_1.Campaign.countDocuments();
-        const donationResult = await campaign_model_1.Campaign.aggregate([
-            { $unwind: "$donors" },
+        const donationResult = await donation_model_1.Donation.aggregate([
+            // { $unwind: "$donors" },
             {
                 $group: {
                     _id: null,
-                    totalAmount: { $sum: "$donors.amount" }
+                    totalAmount: { $sum: "$amount" }
                 }
             }
         ]);
