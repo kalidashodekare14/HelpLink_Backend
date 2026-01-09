@@ -3,6 +3,12 @@ export declare const adminService: {
         totalUser: number;
         totalCampaign: number;
         totalAmount: any;
+        chartData: {
+            name: string | undefined;
+            users: any;
+            campaigns: any;
+            donations: any;
+        }[];
     }>;
     allUsers: (query: any) => Promise<(import("mongoose").Document<unknown, {}, import("../../model/user.model").IUser, {}, {}> & import("../../model/user.model").IUser & {
         _id: import("mongoose").Types.ObjectId;

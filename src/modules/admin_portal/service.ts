@@ -21,11 +21,69 @@ export const adminService = {
                 }
             }
         ])
-        const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
+        const totalAmount = donationResult[0].totalAmount || 0;
+
+
+        // Total Users, Campaigns, Donate Data 
+        const monthMap = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const yearStart = new Date(new Date().getFullYear(), 0, 1);
+        const yearEnd = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59);
+
+
+        const userData = await User.aggregate([
+            { $match: { createdAt: { $gte: yearStart, $lte: yearEnd } } },
+            { $group: { _id: { month: { $month: "$createdAt" } }, count: { $sum: 1 } } },
+            { $sort: { "_id.month": 1 } }
+        ]);
+
+        const campaignData = await Campaign.aggregate([
+            { $match: { createdAt: { $gte: yearStart, $lte: yearEnd } } },
+            { $group: { _id: { month: { $month: "$createdAt" } }, count: { $sum: 1 } } },
+            { $sort: { "_id.month": 1 } }
+        ]);
+
+        const donationData = await Donation.aggregate([
+            {
+                $match: {
+                    payment_status: "Paid",
+                    createdAt: {
+                        $gte: yearStart,
+                        $lte: yearEnd
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: { month: { $month: "$createdAt" } },
+                    totalAmount: { $sum: "$amount" }
+                }
+            },
+            { $sort: { "_id.month": 1 } }
+        ]);
+
+
+        const chartData = Array.from({ length: 12 }, (_, i) => {
+            const monthIndex = i + 1;
+
+            const users = userData.find(d => d._id.month === monthIndex)?.count || 0;
+            const campaigns = campaignData.find(d => d._id.month === monthIndex)?.count || 0;
+            const donations = donationData.find(d => d._id.month === monthIndex)?.totalAmount || 0;
+
+            return {
+                name: monthMap[i],
+                users,
+                campaigns,
+                donations
+            }
+        })
+
+
+
         return {
             totalUser,
             totalCampaign,
-            totalAmount
+            totalAmount,
+            chartData
         }
 
     },
