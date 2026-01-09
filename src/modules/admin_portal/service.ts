@@ -10,15 +10,17 @@ export const adminService = {
         const totalUser = await User.countDocuments();
         const totalCampaign = await Campaign.countDocuments();
         const donationResult = await Donation.aggregate([
-            // { $unwind: "$donors" },
+            {
+                $match: { payment_status: "Paid" }
+            },
             {
                 $group: {
-                    _id: null,
-                    totalAmount: { $sum: "$amount" }
+                    _id: "$campaign_id",
+                    totalAmount: { $sum: "$amount" },
+                    totalDonor: { $sum: 1 }
                 }
             }
         ])
-
         const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
         return {
             totalUser,

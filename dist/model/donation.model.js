@@ -8,7 +8,7 @@ const donationSchema = new mongoose_1.Schema({
     phone_number: { type: Number, required: true },
     donor_email: { type: String, required: true },
     message: { type: String, required: true },
-    amount: { type: String, required: true },
+    amount: { type: Number, required: true },
     paymentID: { type: String },
     id_token: { type: String },
     payment_status: { type: String, enum: ["Pending", "Unpaid", "Paid"] },

@@ -9,11 +9,14 @@ exports.adminService = {
         const totalUser = await user_model_1.User.countDocuments();
         const totalCampaign = await campaign_model_1.Campaign.countDocuments();
         const donationResult = await donation_model_1.Donation.aggregate([
-            // { $unwind: "$donors" },
+            {
+                $match: { payment_status: "Paid" }
+            },
             {
                 $group: {
-                    _id: null,
-                    totalAmount: { $sum: "$amount" }
+                    _id: "$campaign_id",
+                    totalAmount: { $sum: "$amount" },
+                    totalDonor: { $sum: 1 }
                 }
             }
         ]);

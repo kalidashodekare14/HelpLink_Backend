@@ -17,7 +17,7 @@ export declare const donorService: {
     }) | null>;
     donateTrack: (payload: any) => Promise<{
         donationDetails: {
-            amount: string;
+            amount: number;
             payment_status: "Pending" | "Unpaid" | "Paid";
             payment_method: "Bikash" | "Nagad" | "SSLCommerz";
             date: Date | undefined;

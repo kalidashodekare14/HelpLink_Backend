@@ -4,7 +4,7 @@ interface Idonation {
     phone_number: number;
     donor_email: string;
     message: string;
-    amount: string;
+    amount: number;
     paymentID: string;
     id_token: string;
     payment_status: "Pending" | "Unpaid" | "Paid";
