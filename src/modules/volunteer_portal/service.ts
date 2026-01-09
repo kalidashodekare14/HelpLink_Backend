@@ -1,20 +1,24 @@
 import { Campaign } from "../../model/campaign.model"
+import { Donation } from "../../model/donation.model";
 
 
 export const volunteerService = {
     volOverviewInfo: async () => {
         const totalCampaign = await Campaign.countDocuments();
-        const donationResult = await Campaign.aggregate([
-            { $unwind: "$donors" },
+        const donationResult = await Donation.aggregate([
+            {
+                $match: { payment_status: "Paid" }
+            },
             {
                 $group: {
-                    _id: null,
-                    totalAmount: { $sum: "$donors.amount" }
+                    _id: "$campaign_id",
+                    totalAmount: { $sum: "$amount" },
+                    totalDonor: { $sum: 1 }
                 }
             }
         ])
+        const totalAmount = donationResult[0].totalAmount || 0;
 
-        const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
         return {
             totalCampaign,
             totalAmount

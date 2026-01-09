@@ -2,19 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.volunteerService = void 0;
 const campaign_model_1 = require("../../model/campaign.model");
+const donation_model_1 = require("../../model/donation.model");
 exports.volunteerService = {
     volOverviewInfo: async () => {
         const totalCampaign = await campaign_model_1.Campaign.countDocuments();
-        const donationResult = await campaign_model_1.Campaign.aggregate([
-            { $unwind: "$donors" },
+        const donationResult = await donation_model_1.Donation.aggregate([
+            {
+                $match: { payment_status: "Paid" }
+            },
             {
                 $group: {
-                    _id: null,
-                    totalAmount: { $sum: "$donors.amount" }
+                    _id: "$campaign_id",
+                    totalAmount: { $sum: "$amount" },
+                    totalDonor: { $sum: 1 }
                 }
             }
         ]);
-        const totalAmount = donationResult.length > 0 ? donationResult[0].totalAmount : 0;
+        const totalAmount = donationResult[0].totalAmount || 0;
         return {
             totalCampaign,
             totalAmount

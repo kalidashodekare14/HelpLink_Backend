@@ -41,6 +41,6 @@ app.use("/api/v1/profile", routes_4.userRoutes);
 app.use("/api/v1/receiver", (0, roleVerify_1.roleVerify)("receiver"), routes_2.receiverRoutes);
 app.use("/api/v1/donor", (0, roleVerify_1.roleVerify)("donor"), routes_3.donorRoutes);
 app.use("/api/v1/volunteer", (0, roleVerify_1.roleVerify)("volunteer"), routes_5.volunteerRoutes);
-app.use("/api/v1/admin", routes_6.adminRoutes); // roleVerify("admin"),
+app.use("/api/v1/admin", (0, roleVerify_1.roleVerify)("admin"), routes_6.adminRoutes);
 exports.default = app;
 //# sourceMappingURL=app.js.map
