@@ -16,5 +16,6 @@ router.patch("/user_active/:id", (0, validateRequest_1.default)(validation_1.use
 router.get("/total_campaign", controller_1.totalCampaignControll);
 router.patch("/campaign_request_status/:id", (0, validateRequest_1.default)(validation_1.campaignStatusValidation), controller_1.campaignStatusManageControll);
 router.patch("/campaign_delivery_status/:id", (0, validateRequest_1.default)(validation_1.campaignDeliStatusValidation), controller_1.campaignDevliveryStatusManageControll);
+router.get("/total_donation", controller_1.totalDonationControll);
 exports.adminRoutes = router;
 //# sourceMappingURL=routes.js.map

@@ -205,6 +205,30 @@ export const adminService = {
             }
         )
         return campaign;
+    },
+    // Donation Manage
+    allDonations: async (payload: any) => {
+        const { search, payment_status, payment_method } = payload;
+
+        const filter: any = {}
+
+        if (payment_status) {
+            filter.payment_status = { $regex: payment_status, $options: "i" }
+        }
+        if (payment_method) {
+            filter.payment_method = { $regex: payment_method, $options: "i" }
+        }
+
+        if (search) {
+            filter.$or = [
+                { donor_name: { $regex: search, $options: "i" } },
+                { donor_email: { $regex: search, $options: "i" } },
+                { paymentID: { $regex: search, $options: "i" } },
+            ]
+        }
+
+        const donations = await Donation.find(filter).sort({ createdAt: -1 });
+        return donations;
     }
 
 }

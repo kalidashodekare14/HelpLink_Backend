@@ -40,5 +40,10 @@ export declare const adminService: {
     } & {
         __v: number;
     }) | null>;
+    allDonations: (payload: any) => Promise<(import("mongoose").Document<unknown, {}, import("../../model/donation.model").Idonation, {}, {}> & import("../../model/donation.model").Idonation & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    })[]>;
 };
 //# sourceMappingURL=service.d.ts.map

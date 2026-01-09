@@ -163,6 +163,26 @@ exports.adminService = {
             new: true
         });
         return campaign;
+    },
+    // Donation Manage
+    allDonations: async (payload) => {
+        const { search, payment_status, payment_method } = payload;
+        const filter = {};
+        if (payment_status) {
+            filter.payment_status = { $regex: payment_status, $options: "i" };
+        }
+        if (payment_method) {
+            filter.payment_method = { $regex: payment_method, $options: "i" };
+        }
+        if (search) {
+            filter.$or = [
+                { donor_name: { $regex: search, $options: "i" } },
+                { donor_email: { $regex: search, $options: "i" } },
+                { paymentID: { $regex: search, $options: "i" } },
+            ];
+        }
+        const donations = await donation_model_1.Donation.find(filter).sort({ createdAt: -1 });
+        return donations;
     }
 };
 //# sourceMappingURL=service.js.map

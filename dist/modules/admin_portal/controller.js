@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.campaignDevliveryStatusManageControll = exports.campaignStatusManageControll = exports.totalCampaignControll = exports.userActiveManageControll = exports.userRoleManageControll = exports.totalUsersControll = exports.overviewInfoControll = void 0;
+exports.totalDonationControll = exports.campaignDevliveryStatusManageControll = exports.campaignStatusManageControll = exports.totalCampaignControll = exports.userActiveManageControll = exports.userRoleManageControll = exports.totalUsersControll = exports.overviewInfoControll = void 0;
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const service_1 = require("./service");
 // Overview Info Controll
@@ -95,4 +95,13 @@ const campaignDevliveryStatusManageControll = async (req, res) => {
     });
 };
 exports.campaignDevliveryStatusManageControll = campaignDevliveryStatusManageControll;
+const totalDonationControll = async (req, res) => {
+    const result = await service_1.adminService.allDonations(req.query);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        message: "Total Donation Get Successfully",
+        data: result
+    });
+};
+exports.totalDonationControll = totalDonationControll;
 //# sourceMappingURL=controller.js.map

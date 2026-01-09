@@ -92,3 +92,13 @@ export const campaignDevliveryStatusManageControll = async (req: Request, res: R
         data: result
     })
 }
+
+
+export const totalDonationControll = async (req: Request, res: Response) => {
+    const result = await adminService.allDonations(req.query);
+    sendResponse(res, {
+        success: true,
+        message: "Total Donation Get Successfully",
+        data: result
+    })
+}

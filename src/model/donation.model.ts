@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-interface Idonation {
+export interface Idonation {
     campaign_id: string,
     donor_name: string,
     phone_number: number,

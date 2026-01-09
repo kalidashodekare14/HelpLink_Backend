@@ -1,4 +1,4 @@
-interface Idonation {
+export interface Idonation {
     campaign_id: string;
     donor_name: string;
     phone_number: number;
@@ -17,5 +17,4 @@ export declare const Donation: import("mongoose").Model<Idonation, {}, {}, {}, i
 } & {
     __v: number;
 }, any>;
-export {};
 //# sourceMappingURL=donation.model.d.ts.map
