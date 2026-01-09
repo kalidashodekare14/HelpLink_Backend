@@ -224,6 +224,7 @@ export const adminService = {
                 { donor_name: { $regex: search, $options: "i" } },
                 { donor_email: { $regex: search, $options: "i" } },
                 { paymentID: { $regex: search, $options: "i" } },
+                { phone_number: { $regex: search, $options: "i" } },
             ]
         }
 

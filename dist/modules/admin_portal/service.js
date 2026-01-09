@@ -179,6 +179,7 @@ exports.adminService = {
                 { donor_name: { $regex: search, $options: "i" } },
                 { donor_email: { $regex: search, $options: "i" } },
                 { paymentID: { $regex: search, $options: "i" } },
+                { phone_number: { $regex: search, $options: "i" } },
             ];
         }
         const donations = await donation_model_1.Donation.find(filter).sort({ createdAt: -1 });
