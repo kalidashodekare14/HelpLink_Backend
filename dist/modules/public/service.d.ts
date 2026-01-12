@@ -21,6 +21,18 @@ export declare const publicService: {
         riskScore: number;
         riskLevel: "High" | "Medium" | "Low" | "Extreme";
         reasons: string[];
+        temperature: {
+            temp: any;
+            condition: string;
+        };
+        humidity: {
+            humidity: number;
+            condition: string;
+        };
+        pressure: {
+            pressure: number;
+            condition: string;
+        };
     }[]>;
 };
 //# sourceMappingURL=service.d.ts.map

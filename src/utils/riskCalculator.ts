@@ -73,3 +73,51 @@ export function calculateRisk(weather: any): RiskResult {
 
   return { score, level, reasons };
 }
+
+
+export const getTempCondition = (main: any) => {
+  const temp = main.temp
+  let condition = ""
+  if (temp < 20) {
+    condition = "Cold"
+  } else if (temp >= 20 && temp <= 32) {
+    condition = "Normal"
+  } else if (temp > 32) {
+    condition = "Heat Risk"
+  }
+
+  return {
+    temp,
+    condition
+  }
+}
+
+export const getHumidityCondition = (humidity: number) => {
+  let condition = "";
+  if (humidity < 30) {
+    condition = "Low Humidity"
+  } else if (humidity < 60) {
+    condition = "Normal Humidity"
+  } else {
+    condition = "High Humidity"
+  }
+  return {
+    humidity,
+    condition
+  }
+}
+
+export const getPressureCondition = (pressure: number) => {
+  let condition = "";
+  if (pressure < 1005) {
+    condition = "Storm Likely"
+  } else if (pressure <= 1015) {
+    condition = "Slight Risk"
+  } else {
+    condition = "Stable"
+  }
+  return {
+    pressure,
+    condition
+  }
+}

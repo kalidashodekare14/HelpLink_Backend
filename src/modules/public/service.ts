@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Campaign } from "../../model/campaign.model"
 import { config } from "../../config/env";
-import { calculateRisk } from "../../utils/riskCalculator";
+import { calculateRisk, getHumidityCondition, getPressureCondition, getTempCondition } from "../../utils/riskCalculator";
 const districts: {
     district: string,
     lat: number,
@@ -141,13 +141,19 @@ export const publicService = {
                     }
                 });
                 const risk = calculateRisk(res.data);
+                const temperature = getTempCondition(res.data.main);
+                const humidity = getHumidityCondition(res.data.main.humidity);
+                const pressure = getPressureCondition(res.data.main.pressure)
                 return {
                     district: d.district,
                     lat: d.lat,
                     lon: d.lon,
                     riskScore: risk.score,
                     riskLevel: risk.level,
-                    reasons: risk.reasons
+                    reasons: risk.reasons,
+                    temperature: temperature,
+                    humidity: humidity,
+                    pressure: pressure
                 };
             })
         )

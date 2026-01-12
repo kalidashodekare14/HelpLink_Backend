@@ -132,13 +132,19 @@ exports.publicService = {
                 }
             });
             const risk = (0, riskCalculator_1.calculateRisk)(res.data);
+            const temperature = (0, riskCalculator_1.getTempCondition)(res.data.main);
+            const humidity = (0, riskCalculator_1.getHumidityCondition)(res.data.main.humidity);
+            const pressure = (0, riskCalculator_1.getPressureCondition)(res.data.main.pressure);
             return {
                 district: d.district,
                 lat: d.lat,
                 lon: d.lon,
                 riskScore: risk.score,
                 riskLevel: risk.level,
-                reasons: risk.reasons
+                reasons: risk.reasons,
+                temperature: temperature,
+                humidity: humidity,
+                pressure: pressure
             };
         }));
         // console.log('checking weather data', weatherData)

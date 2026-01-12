@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPressureCondition = exports.getHumidityCondition = exports.getTempCondition = void 0;
 exports.calculateRisk = calculateRisk;
 function calculateRisk(weather) {
     let score = 0;
@@ -67,4 +68,56 @@ function calculateRisk(weather) {
         level = "Medium";
     return { score, level, reasons };
 }
+const getTempCondition = (main) => {
+    const temp = main.temp;
+    let condition = "";
+    if (temp < 20) {
+        condition = "Cold";
+    }
+    else if (temp >= 20 && temp <= 32) {
+        condition = "Normal";
+    }
+    else if (temp > 32) {
+        condition = "Heat Risk";
+    }
+    return {
+        temp,
+        condition
+    };
+};
+exports.getTempCondition = getTempCondition;
+const getHumidityCondition = (humidity) => {
+    let condition = "";
+    if (humidity < 30) {
+        condition = "Low Humidity";
+    }
+    else if (humidity < 60) {
+        condition = "Normal Humidity";
+    }
+    else {
+        condition = "High Humidity";
+    }
+    return {
+        humidity,
+        condition
+    };
+};
+exports.getHumidityCondition = getHumidityCondition;
+const getPressureCondition = (pressure) => {
+    let condition = "";
+    if (pressure < 1005) {
+        condition = "Storm Likely";
+    }
+    else if (pressure <= 1015) {
+        condition = "Slight Risk";
+    }
+    else {
+        condition = "Stable";
+    }
+    return {
+        pressure,
+        condition
+    };
+};
+exports.getPressureCondition = getPressureCondition;
 //# sourceMappingURL=riskCalculator.js.map
