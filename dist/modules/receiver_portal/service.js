@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.receiverService = void 0;
+const genai_1 = require("@google/genai");
 const cloudinary_1 = __importDefault(require("../../config/cloudinary"));
 const env_1 = require("../../config/env");
 const campaign_model_1 = require("../../model/campaign.model");
-const genai_1 = require("@google/genai");
 const ai = new genai_1.GoogleGenAI({ apiKey: env_1.config.gemini_api_key });
 exports.receiverService = {
     helpRequestPost: async (payload) => {
@@ -35,7 +35,7 @@ exports.receiverService = {
             `,
         });
         if (!response.text) {
-            throw new Error('Failed to get a valid response from AI model');
+            throw new Error("Failed to get a valid response from AI model");
         }
         // Parse the AI response
         const parsed = JSON.parse(response.text);
@@ -44,9 +44,9 @@ exports.receiverService = {
             ...requestData,
             situation: {
                 severity: parsed.severity,
-                score: parsed.score
+                score: parsed.score,
             },
-            request_status: parsed.score >= 69 ? "Approved" : "Pending"
+            request_status: parsed.score >= 69 ? "Approved" : "Pending",
         });
         return requestSave;
     },
@@ -57,7 +57,7 @@ exports.receiverService = {
             const base64 = file.buffer.toString("base64");
             const dataUri = `data:${file.mimetype};base64,${base64}`;
             const uploadImage = await cloudinary_1.default.uploader.upload(dataUri, {
-                folder: "campaigns"
+                folder: "campaigns",
             });
             if (!uploadImage.url)
                 throw new Error("Image not uploaded");
@@ -67,7 +67,7 @@ exports.receiverService = {
     },
     trackRequest: async (payload) => {
         const email = payload;
-        console.log('received email', email);
+        console.log("received email", email);
         const trackData = await campaign_model_1.Campaign.find({ receiver_email: email });
         return trackData;
     },
@@ -100,7 +100,7 @@ exports.receiverService = {
             `,
         });
         if (!response.text) {
-            throw new Error('Failed to get a valid response from AI model');
+            throw new Error("Failed to get a valid response from AI model");
         }
         // Parse the AI response
         const parsed = JSON.parse(response.text);
@@ -108,16 +108,16 @@ exports.receiverService = {
             ...updateData,
             situation: {
                 severity: parsed.severity,
-                score: parsed.score
+                score: parsed.score,
             },
-            request_status: parsed.score >= 69 ? "Approved" : "Pending"
+            request_status: parsed.score >= 69 ? "Approved" : "Pending",
         }, { new: true });
         return updatedCampaign;
     },
     campaignRequestDelete: async (id) => {
-        console.log('checking error', id);
+        console.log("checking error", id);
         const campaignDelete = await campaign_model_1.Campaign.findByIdAndDelete(id);
         return campaignDelete;
-    }
+    },
 };
 //# sourceMappingURL=service.js.map
