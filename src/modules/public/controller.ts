@@ -7,6 +7,7 @@ import { User } from "../../model/user.model";
 import sendResponse from "../../utils/sendResponse";
 import { publicService } from "./service";
 
+// Total Campaign Controller
 export const totalCampaignsControll = async (req: Request, res: Response) => {
   const result = await publicService.totalCampaigns(req.query);
   sendResponse(res, {
@@ -16,6 +17,7 @@ export const totalCampaignsControll = async (req: Request, res: Response) => {
   });
 };
 
+// Campaign Details Controller
 export const campaignDetailsControll = async (req: Request, res: Response) => {
   const result = await publicService.campaignDetails(req.params.id);
   sendResponse(res, {
@@ -25,6 +27,7 @@ export const campaignDetailsControll = async (req: Request, res: Response) => {
   });
 };
 
+// User roll controller
 export const userRolecontroll = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
@@ -47,7 +50,17 @@ export const userRolecontroll = async (req: Request, res: Response) => {
     },
   });
 };
+// AI-Chatbot Controller
+export const aiChatbotControll = async (req: Request, res: Response) => {
+  const result = await publicService.chatbotAI(req.body);
+  sendResponse(res, {
+    success: true,
+    message: "AI response successfully",
+    data: result,
+  });
+};
 
+// Bikash Callback Controller
 export const bikashPaymentCallbackControll = async (
   req: Request,
   res: Response,
@@ -107,7 +120,7 @@ export const bikashPaymentCallbackControll = async (
     }
   }
 };
-
+// SSLCommerz Success Controller
 export const sslcommerzPaymentSuccessControll = async (
   req: Request,
   res: Response,
@@ -132,7 +145,7 @@ export const sslcommerzPaymentSuccessControll = async (
     return res.redirect(303, `${config.frontend_url}/payment_fail`);
   }
 };
-
+// SSLCommerz Fail Controller
 export const sslcommerzPaymentFailControll = async (
   req: Request,
   res: Response,
@@ -140,7 +153,7 @@ export const sslcommerzPaymentFailControll = async (
   // Handle SSLCommerz payment fail callback here
   return res.redirect(303, `${config.frontend_url}/payment_fail`);
 };
-
+// SSLCommerz Cancel Controller
 export const sslcommerzPaymentCancelControll = async (
   req: Request,
   res: Response,

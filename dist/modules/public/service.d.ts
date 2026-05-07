@@ -14,25 +14,9 @@ export declare const publicService: {
     } & {
         __v: number;
     }) | null>;
-    weatherRiskTrack: () => Promise<{
-        district: string;
-        lat: number;
-        lon: number;
-        riskScore: number;
-        riskLevel: "High" | "Medium" | "Low" | "Extreme";
-        reasons: string[];
-        temperature: {
-            temp: any;
-            condition: string;
-        };
-        humidity: {
-            humidity: number;
-            condition: string;
-        };
-        pressure: {
-            pressure: number;
-            condition: string;
-        };
-    }[]>;
+    chatbotAI: (payload: any) => Promise<{
+        send: string;
+        replay: string;
+    }>;
 };
 //# sourceMappingURL=service.d.ts.map

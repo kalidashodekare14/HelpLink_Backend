@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  aiChatbotControll,
   bikashPaymentCallbackControll,
   campaignDetailsControll,
   sslcommerzPaymentCancelControll,
@@ -13,6 +14,8 @@ const router = express.Router();
 router.get("/total_campaign", totalCampaignsControll);
 router.get("/campaign_details/:id", campaignDetailsControll);
 router.get("/user_role", userRolecontroll);
+// chatbot api
+router.post("/ai_chatbot", aiChatbotControll);
 
 router.get("/bikash_payment_callback", bikashPaymentCallbackControll);
 router.post("/sslcommerz_payment_success", sslcommerzPaymentSuccessControll);
