@@ -16,7 +16,7 @@ export declare const publicService: {
     }) | null>;
     chatbotAI: (payload: any) => Promise<{
         send: string;
-        replay: string;
+        replay: any;
     }>;
 };
 //# sourceMappingURL=service.d.ts.map
