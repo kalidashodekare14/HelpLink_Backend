@@ -88,7 +88,7 @@ src/
 
 ```bash
 git clone https://github.com/kalidashodekare14/HelpLink_Backend.git
-cd HelpLink_Backen
+cd HelpLink_Backend
 npm install
 npm run dev
 ```
