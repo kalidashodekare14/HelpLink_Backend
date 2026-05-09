@@ -8,14 +8,14 @@ HelpLink Backend is a RESTful API built with Node.js, Express.js, and MongoDB. I
 
 ## 🚀 Features
 
-- 🔐 JWT-based authentication & secure authorization system
-- 👥 Role-based access control (Receiver, Donor, Volunteer, Admin)
-- 🆘 Emergency help request creation, update, and management
-- 💰 Donation system with tracking and history
-- 🤖 AI-powered emergency detection for prioritizing urgent requests
-- 💬 OpenAI-powered chatbot integration support
-- 🧾 Fully RESTful API structure for frontend communication
-- 🛡️ Protected routes using middleware validation
+- JWT-based authentication & secure authorization system
+- Role-based access control (Receiver, Donor, Volunteer, Admin)
+- Emergency help request creation, update, and management
+- Donation system with tracking and history
+- AI-powered emergency detection for prioritizing urgent requests
+- OpenAI-powered chatbot integration support
+- Fully RESTful API structure for frontend communication
+- Protected routes using middleware validation
 
 ---
 
